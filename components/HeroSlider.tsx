@@ -59,7 +59,7 @@ export default function HeroSlider() {
   }, [next]);
 
   return (
-    <section className="relative w-full h-[100svh] pt-16 box-border overflow-hidden bg-[linear-gradient(160deg,#F0F7FF_0%,#F0FDF8_50%,#FFFDF0_100%)]">
+    <section className="relative w-full min-h-[100svh] pt-14 sm:pt-16 box-border overflow-hidden bg-[linear-gradient(160deg,#F0F7FF_0%,#F0FDF8_50%,#FFFDF0_100%)]">
       {/* Background image crossfade */}
       <AnimatePresence initial={false} mode="sync">
         <motion.div
@@ -86,8 +86,8 @@ export default function HeroSlider() {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 h-full">
-        <div className="max-w-[1200px] mx-auto px-5 lg:px-8 h-full flex items-center">
+      <div className="relative z-10 min-h-[100svh]">
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8 min-h-[100svh] flex items-center pb-20 sm:pb-16">
           <AnimatePresence initial={false} mode="wait">
             <motion.div
               key={currentSlide}
@@ -109,28 +109,28 @@ export default function HeroSlider() {
 
               <motion.h1
                 variants={fadeUp}
-                className="mt-6 font-headline text-[44px] md:text-[72px] font-black tracking-tight text-[var(--text-white)] leading-[1.05]"
+                className="mt-5 sm:mt-6 font-headline text-[40px] sm:text-[44px] md:text-[72px] font-black tracking-tight text-[var(--text-white)] leading-[1.05]"
               >
                 {slides[currentSlide].title}
               </motion.h1>
 
               <motion.p
                 variants={fadeUp}
-                className="mt-5 text-[16px] md:text-[16px] font-normal text-[rgb(var(--text-white-rgb)/0.84)] leading-[1.8] max-w-xl"
+                className="mt-4 sm:mt-5 text-[15px] sm:text-[16px] font-normal text-[rgb(var(--text-white-rgb)/0.84)] leading-[1.8] max-w-xl"
               >
                 {slides[currentSlide].subtitle}
               </motion.p>
 
-              <motion.div variants={fadeUp} className="mt-10 flex flex-col sm:flex-row gap-4">
+              <motion.div variants={fadeUp} className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link
                   href="/mutual-funds"
-                  className="btn-primary inline-flex items-center justify-center px-8 py-4 rounded-xl font-headline font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))]"
+                  className="btn-primary w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-headline font-bold tracking-tight text-[15px] sm:text-[16px] text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))]"
                 >
                   Read More
                 </Link>
                 <Link
                   href="/contact"
-                  className="relative overflow-hidden inline-flex items-center justify-center px-8 py-4 rounded-xl font-headline font-bold tracking-tight text-[var(--text-white)] border border-[rgb(var(--text-white-rgb)/0.35)] hover:bg-[rgb(var(--text-white-rgb)/0.10)] transition-colors"
+                  className="relative overflow-hidden w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-headline font-bold tracking-tight text-[15px] sm:text-[16px] text-[var(--text-white)] border border-[rgb(var(--text-white-rgb)/0.35)] hover:bg-[rgb(var(--text-white-rgb)/0.10)] transition-colors"
                 >
                   Contact Now
                 </Link>
@@ -143,7 +143,7 @@ export default function HeroSlider() {
         <button
           type="button"
           onClick={prev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[rgb(var(--text-white-rgb)/0.70)] hover:bg-[rgb(var(--text-white-rgb)/0.86)] transition-colors flex items-center justify-center"
+          className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-[rgb(var(--text-white-rgb)/0.70)] hover:bg-[rgb(var(--text-white-rgb)/0.86)] transition-colors items-center justify-center"
           aria-label="Previous slide"
         >
           <span className="material-symbols-outlined text-[var(--text-primary)]">chevron_left</span>
@@ -151,14 +151,14 @@ export default function HeroSlider() {
         <button
           type="button"
           onClick={next}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-[rgb(var(--text-white-rgb)/0.70)] hover:bg-[rgb(var(--text-white-rgb)/0.86)] transition-colors flex items-center justify-center"
+          className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-[rgb(var(--text-white-rgb)/0.70)] hover:bg-[rgb(var(--text-white-rgb)/0.86)] transition-colors items-center justify-center"
           aria-label="Next slide"
         >
           <span className="material-symbols-outlined text-[var(--text-primary)]">chevron_right</span>
         </button>
 
         {/* Dot indicators */}
-        <div className="absolute bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-2">
+        <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-2">
           {slides.map((_, idx) => {
             const active = idx === currentSlide;
             return (
