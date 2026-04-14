@@ -20,17 +20,65 @@ const PRODUCTS = [
   "Bonds",
 ];
 
-const NAV_LINKS = [
+const SERVICES = ["Angel Funds", "Smallcase", "Capital Gain Bond"];
+
+type DropdownItem = { href: string; label: string };
+type NavLink = {
+  href: string;
+  label: string;
+  dropdownItems?: DropdownItem[];
+  dropdownLayout?: "grid" | "list";
+};
+
+const ABOUT_ITEMS: DropdownItem[] = [
+  { href: "/company-profile", label: "Company Profile" },
+  { href: "/meet-our-founder", label: "Meet Our Founder" },
+  { href: "/who-we-are", label: "Who We Are" },
+  { href: "/about#gallery", label: "Gallery" },
+];
+
+const PRODUCT_ITEMS: DropdownItem[] = PRODUCTS.map((p) => ({
+  href:
+    p === "Mutual Funds"
+      ? "/mutual-funds"
+      : `/products/${p.toLowerCase().replace(/ /g, "-")}`,
+  label: p,
+}));
+
+const SERVICE_ITEMS: DropdownItem[] = SERVICES.map((s) => ({
+  href: `/services/${s.toLowerCase().replace(/ /g, "-")}`,
+  label: s,
+}));
+
+const NAV_LINKS: NavLink[] = [
   { href: "/", label: "HOME" },
-  { href: "/about", label: "ABOUT US" },
-  { href: "/mutual-funds", label: "PRODUCTS", hasDropdown: true },
+  {
+    href: "/about",
+    label: "ABOUT US",
+    dropdownItems: ABOUT_ITEMS,
+    dropdownLayout: "list",
+  },
+  {
+    href: "/services",
+    label: "SERVICES",
+    dropdownItems: SERVICE_ITEMS,
+    dropdownLayout: "list",
+  },
+  {
+    href: "/mutual-funds",
+    label: "PRODUCTS",
+    dropdownItems: PRODUCT_ITEMS,
+    dropdownLayout: "grid",
+  },
   { href: "/calculator", label: "CALCULATORS" },
   { href: "/contact", label: "CONTACT US" },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState<string | null>(
+    null
+  );
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -84,37 +132,51 @@ export default function Navbar() {
 
         {/* ─── Desktop Nav ─── */}
         <div className="hidden lg:flex items-stretch h-full">
-          {NAV_LINKS.map((link) =>
-            link.hasDropdown ? (
-              <div key={link.label} className="relative group flex items-stretch">
-                <button
-                  type="button"
-                  className={`${linkBaseClass} gap-1`}
-                  aria-haspopup="menu"
+          {NAV_LINKS.map((link) => {
+            if (link.dropdownItems) {
+              const dropdownItems = link.dropdownItems;
+              const isActive = pathname === link.href;
+
+              return (
+                <div
+                  key={link.label}
+                  className="relative group flex items-stretch"
                 >
-                  {link.label}
-                  <span className="material-symbols-outlined text-[14px] dropdown-arrow">
-                    expand_more
-                  </span>
-                </button>
-                {/* Dropdown */}
-                <div className="absolute top-full left-0 w-72 bg-[var(--surface)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] invisible group-hover:visible opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 rounded-2xl overflow-hidden border border-[var(--borderSoft)]">
-                  {PRODUCTS.map((p, i) => (
-                    <Link
-                      key={p}
-                      href={`/products/${p.toLowerCase().replace(/ /g, "-")}`}
-                      className={`block px-5 py-3 text-[11px] font-bold text-[var(--text-secondary)] hover:bg-[var(--gray-50)] hover:text-[var(--blue-700)] uppercase tracking-wide transition-colors ${
-                        i < PRODUCTS.length - 1
-                          ? "border-b border-[var(--borderSoft)]"
-                          : ""
-                      }`}
-                    >
-                      {p}
-                    </Link>
-                  ))}
+                  <button
+                    type="button"
+                    className={`${linkBaseClass} gap-1 ${
+                      isActive
+                        ? "text-[var(--blue-700)] after:scale-x-100"
+                        : ""
+                    }`}
+                    aria-haspopup="menu"
+                  >
+                    {link.label}
+                    <span className="material-symbols-outlined text-[14px] dropdown-arrow">
+                      expand_more
+                    </span>
+                  </button>
+                  {/* Dropdown */}
+                  <div className="absolute top-full left-0 w-72 bg-[var(--surface)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] invisible group-hover:visible opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 rounded-2xl overflow-hidden border border-[var(--borderSoft)]">
+                    {dropdownItems.map((item, i) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`block px-5 py-3 text-[11px] font-bold text-[var(--text-secondary)] hover:bg-[var(--gray-50)] hover:text-[var(--blue-700)] uppercase tracking-wide transition-colors ${
+                          i < dropdownItems.length - 1
+                            ? "border-b border-[var(--borderSoft)]"
+                            : ""
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : (
+              );
+            }
+
+            return (
               <Link
                 key={link.label}
                 href={link.href}
@@ -126,8 +188,8 @@ export default function Navbar() {
               >
                 {link.label}
               </Link>
-            )
-          )}
+            );
+          })}
         </div>
 
         {/* ─── CTA Buttons ─── */}
@@ -156,44 +218,82 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="lg:hidden bg-[var(--surface)] border-t border-[var(--borderSoft)] px-5 pb-6 animate-slide-down">
           <div className="space-y-1 pt-2">
-            {NAV_LINKS.map((link) =>
-              link.hasDropdown ? (
-                <div key={link.label}>
-                  <button
-                    onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                    className="w-full flex items-center justify-between py-3 text-sm font-bold uppercase text-[var(--text-secondary)] border-b border-[var(--borderSoft)] font-headline tracking-tight"
-                  >
-                    {link.label}
-                    <span className="material-symbols-outlined text-sm">
-                      {mobileProductsOpen ? "expand_less" : "expand_more"}
-                    </span>
-                  </button>
-                  {mobileProductsOpen && (
-                    <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 p-3 grid grid-cols-2 gap-1 border border-[var(--borderSoft)]">
-                      {PRODUCTS.map((p) => (
-                        <Link
-                          key={p}
-                          href={`/products/${p.toLowerCase().replace(/ /g, "-")}`}
-                          className="py-2 px-2 text-[11px] font-bold uppercase text-[var(--text-muted)] hover:text-[var(--blue-700)] transition-colors"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {p}
-                        </Link>
+            {NAV_LINKS.map((link) => {
+              if (link.dropdownItems) {
+                const dropdownItems = link.dropdownItems;
+                const isOpen = mobileDropdownOpen === link.label;
+
+                return (
+                  <div key={link.label}>
+                    <button
+                      onClick={() =>
+                        setMobileDropdownOpen((prev) =>
+                          prev === link.label ? null : link.label
+                        )
+                      }
+                      className="w-full flex items-center justify-between py-3 text-sm font-bold uppercase text-[var(--text-secondary)] border-b border-[var(--borderSoft)] font-headline tracking-tight"
+                    >
+                      {link.label}
+                      <span className="material-symbols-outlined text-sm">
+                        {isOpen ? "expand_less" : "expand_more"}
+                      </span>
+                    </button>
+                    {isOpen &&
+                      (link.dropdownLayout === "grid" ? (
+                        <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 p-3 grid grid-cols-2 gap-1 border border-[var(--borderSoft)]">
+                          {dropdownItems.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="py-2 px-2 text-[11px] font-bold uppercase text-[var(--text-muted)] hover:text-[var(--blue-700)] transition-colors"
+                              onClick={() => {
+                                setMobileOpen(false);
+                                setMobileDropdownOpen(null);
+                              }}
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 overflow-hidden border border-[var(--borderSoft)]">
+                          {dropdownItems.map((item, i) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className={`block py-3 px-4 text-[11px] font-bold uppercase tracking-wide text-[var(--text-muted)] hover:text-[var(--blue-700)] hover:bg-[rgb(var(--text-white-rgb)/0.7)] transition-colors ${
+                                i < dropdownItems.length - 1
+                                  ? "border-b border-[var(--borderSoft)]"
+                                  : ""
+                              }`}
+                              onClick={() => {
+                                setMobileOpen(false);
+                                setMobileDropdownOpen(null);
+                              }}
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
                       ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
+                  </div>
+                );
+              }
+
+              return (
                 <Link
                   key={link.label}
                   href={link.href}
                   className="block py-3 text-sm font-bold uppercase text-[var(--text-secondary)] hover:text-[var(--blue-700)] border-b border-[var(--borderSoft)] font-headline tracking-tight transition-colors"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setMobileDropdownOpen(null);
+                  }}
                 >
                   {link.label}
                 </Link>
-              )
-            )}
+              );
+            })}
           </div>
           <div className="flex gap-3 pt-5">
             <button className="flex-1 py-3 border border-[var(--border)] rounded-xl text-[var(--text-secondary)] text-sm font-bold font-headline">

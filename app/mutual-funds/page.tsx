@@ -1,437 +1,597 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
-export const metadata: Metadata = { title: "Explore Mutual Funds" };
+export const metadata: Metadata = {
+  title: "Mutual Funds",
+  description:
+    "Mutual funds help you grow wealth through diversified, professionally managed portfolios. Explore types, benefits, and how Sipwala guides your investment journey.",
+};
 
-const categories = [
+const reasons = [
   {
-    icon: "corporate_fare",
-    title: "Large Cap",
+    title: "Diversification",
+    icon: "account_tree",
     description:
-      "Stable growth through India's top 100 established companies. Ideal for long-term wealth preservation.",
-    iconBg: "bg-[rgb(var(--blue-700-rgb)/0.10)]",
-    iconColor: "text-[var(--blue-700)]",
-    tag: "Low-Moderate Risk",
-    tagColor: "bg-[rgb(var(--blue-700-rgb)/0.10)] text-[var(--blue-700)]",
-    returns: "14.2% 3Y CAGR",
-    span: 1,
+      "Your investment is spread across multiple assets, reducing risk concentration.",
   },
   {
-    icon: "trending_up",
-    title: "Mid Cap",
+    title: "Professional Management",
+    icon: "workspace_premium",
     description:
-      "Targeting high-growth potential in emerging leaders. A balanced mix of risk and reward.",
-    iconBg: "bg-[rgb(var(--green-600-rgb)/0.10)]",
-    iconColor: "text-[var(--green-700)]",
-    tag: "Moderate-High Risk",
-    tagColor: "bg-[rgb(var(--green-600-rgb)/0.10)] text-[var(--green-700)]",
-    returns: "24.1% 3Y CAGR",
-    span: 1,
+      "Experienced fund managers make informed decisions to pursue better outcomes.",
   },
   {
-    icon: "rocket_launch",
-    title: "Small Cap",
+    title: "Affordable for Everyone",
+    icon: "savings",
     description:
-      "Aggressive growth from niche innovators. High volatility but exceptional multi-bagger potential.",
-    iconBg: "bg-[rgb(var(--gold-base-rgb)/0.18)]",
-    iconColor: "text-[var(--gold-dark)]",
-    tag: "High Risk",
-    tagColor: "bg-[rgb(var(--gold-base-rgb)/0.18)] text-[var(--gold-dark)]",
-    returns: "31.8% 3Y CAGR",
-    span: 1,
+      "Start with small amounts—mutual funds are beginner-friendly and accessible.",
   },
   {
-    icon: "factory",
-    title: "Sectoral",
+    title: "Flexibility & Liquidity",
+    icon: "swap_horiz",
     description:
-      "Concentrated bets on specific industries like Tech, Healthcare, or Finance. For the expert eye.",
-    iconBg: "bg-[rgb(var(--navy-800-rgb)/0.10)]",
-    iconColor: "text-[var(--navy-800)]",
-    tag: "Very High Risk",
-    tagColor: "bg-[rgb(var(--navy-800-rgb)/0.10)] text-[var(--navy-800)]",
-    returns: "28.5% 3Y CAGR",
-    span: 1,
+      "Invest, withdraw, or switch funds based on your needs and life goals.",
+  },
+  {
+    title: "Goal-Based Investing",
+    icon: "flag",
+    description:
+      "Plan for retirement, education, or wealth creation with structured strategies.",
   },
 ];
 
-const featuredFunds = [
+const trust = [
   {
+    title: "Local understanding + professional expertise",
+    icon: "handshake",
+    description:
+      "We understand your goals, lifestyle, and priorities—and advise accordingly.",
+  },
+  {
+    title: "Personalized investment strategy",
+    icon: "tune",
+    description:
+      "Recommendations are aligned with your timeline, risk appetite, and objectives.",
+  },
+  {
+    title: "Guidance at every step",
+    icon: "support_agent",
+    description:
+      "From selection to tracking, you’re supported with clear, practical advice.",
+  },
+  {
+    title: "Trust-first approach",
+    icon: "verified",
+    description:
+      "Transparency, process clarity, and long-term relationships come first.",
+  },
+];
+
+const fundTypes = [
+  {
+    title: "Open-Ended Funds",
+    icon: "all_inclusive",
+    description:
+      "Flexible funds that allow you to invest and withdraw anytime (as per fund rules).",
+  },
+  {
+    title: "Closed-Ended Funds",
+    icon: "lock",
+    description:
+      "Funds with a fixed number of units and a lock-in period.",
+  },
+  {
+    title: "Equity Funds",
     icon: "show_chart",
-    name: "Quant Small Cap Fund",
-    category: "High Risk • Equity: Small Cap",
-    cagr: "34.2%",
-    badge: "Top Performer",
-    badgeColor: "bg-[rgb(var(--blue-700-rgb)/0.10)] text-[var(--blue-700)]",
+    description:
+      "Invest mainly in stocks—generally suited for long-term growth goals.",
   },
   {
+    title: "Debt Funds",
     icon: "account_balance",
-    name: "HDFC Index Fund",
-    category: "Moderate Risk • Nifty 50",
-    cagr: "18.5%",
-    badge: "Recommended",
-    badgeColor: "bg-[rgb(var(--green-600-rgb)/0.10)] text-[var(--green-700)]",
+    description:
+      "Invest in bonds and fixed-income instruments—typically lower volatility.",
   },
   {
-    icon: "eco",
-    name: "Parag Parikh Flexi Cap",
-    category: "Moderate Risk • Multi Cap",
-    cagr: "22.8%",
-    badge: "Most Trusted",
-    badgeColor: "bg-[rgb(var(--navy-800-rgb)/0.10)] text-[var(--navy-800)]",
+    title: "Hybrid Funds",
+    icon: "balance",
+    description:
+      "A mix of equity and debt—aims to balance growth and stability.",
   },
   {
-    icon: "savings",
-    name: "SBI Blue Chip Fund",
-    category: "Low-Moderate Risk • Large Cap",
-    cagr: "15.4%",
-    badge: "Stable",
-    badgeColor: "bg-[rgb(var(--blue-700-rgb)/0.10)] text-[var(--blue-700)]",
+    title: "Income Funds",
+    icon: "payments",
+    description:
+      "Focus on regular income through interest and dividends.",
   },
   {
+    title: "Real Asset Funds",
     icon: "diamond",
-    name: "Axis Mid Cap Fund",
-    category: "High Risk • Mid Cap",
-    cagr: "26.1%",
-    badge: "High Growth",
-    badgeColor: "bg-[rgb(var(--gold-base-rgb)/0.18)] text-[var(--gold-dark)]",
+    description:
+      "Exposure to physical assets like gold, commodities, or real estate themes.",
   },
   {
-    icon: "bolt",
-    name: "Mirae Asset ELSS Fund",
-    category: "High Risk • ELSS Tax Saver",
-    cagr: "20.3%",
-    badge: "Tax Saver",
-    badgeColor: "bg-[rgb(var(--green-600-rgb)/0.10)] text-[var(--green-700)]",
+    title: "Sector Funds",
+    icon: "domain",
+    description:
+      "Focused investing in specific industries like IT, pharma, or energy.",
+  },
+];
+
+const philosophy = [
+  "Long-term wealth creation",
+  "Risk-managed diversification",
+  "Goal-based planning",
+  "Consistent investing (SIP approach)",
+  "Transparency and trust",
+];
+
+const steps = [
+  {
+    title: "Consultation",
+    icon: "forum",
+    description: "Discuss your goals with our experts.",
+  },
+  {
+    title: "Financial Assessment",
+    icon: "manage_accounts",
+    description: "We analyze your income, risk appetite, and time horizon.",
+  },
+  {
+    title: "Investment Plan",
+    icon: "assignment",
+    description: "Get a customized mutual fund strategy.",
+  },
+  {
+    title: "Ongoing Support",
+    icon: "monitoring",
+    description: "Regular tracking, updates, and expert guidance.",
   },
 ];
 
 export default function MutualFundsPage() {
   return (
     <>
-      {/* ─── Header ────────────────────────────────────────── */}
+      {/* ─── Hero ──────────────────────────────────────────── */}
       <section
-        className="pt-24 md:pt-32 pb-16 md:pb-24"
+        className="pt-24 md:pt-32 pb-12 md:pb-16 overflow-hidden"
         role="region"
-        aria-labelledby="mutual-funds-title"
+        aria-labelledby="mf-title"
       >
         <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-12">
-            <div className="lg:col-span-7">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <span className="inline-flex items-center px-[14px] py-[5px] rounded-[20px] text-[11px] font-bold tracking-[2px] uppercase bg-[var(--green-50)] text-[var(--green-700)] border border-[rgb(var(--green-700-rgb)/0.18)] mb-3">
+                Namaste from Amravati
+              </span>
               <h1
-                id="mutual-funds-title"
-                className="font-headline text-[44px] md:text-[72px] font-black tracking-tight leading-[1.05] text-[var(--text-primary)] mb-6"
+                id="mf-title"
+                className="font-headline text-[40px] md:text-[64px] font-black tracking-tight leading-[1.05] text-[var(--text-primary)]"
               >
-                Explore Mutual Funds
+                Mutual Funds — Grow Your Wealth with Confidence
               </h1>
-              <p className="text-[16px] leading-[1.8] text-[var(--text-secondary)] max-w-2xl">
-                Navigate the world of curated investments. From steady large-cap
-                growth to high-potential sectoral bets, find the vehicle that fits
-                your financial horizon.
+              <p className="mt-5 text-[16px] md:text-[17px] leading-[1.9] text-[var(--text-secondary)] max-w-xl">
+                At Sipwala, we believe that financial growth begins with the
+                right knowledge and the right guidance. Mutual Funds are one of
+                the most powerful and accessible ways to build wealth—smart,
+                flexible, and disciplined.
               </p>
-            </div>
+              <p className="mt-4 text-[16px] md:text-[17px] leading-[1.9] text-[var(--text-secondary)] max-w-xl">
+                Let’s take your first step toward a secure financial future.
+              </p>
 
-            <div className="lg:col-span-5 w-full">
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-hint)]">
-                  search
-                </span>
-                <input
-                  className="w-full pl-12 pr-4 py-4 bg-[var(--surface)] border border-[var(--borderSoft)] focus:border-[rgb(var(--blue-700-rgb)/0.35)] focus:ring-2 focus:ring-[rgb(var(--blue-700-rgb)/0.18)] transition text-[var(--text-primary)] placeholder:text-[var(--text-hint)] rounded-xl outline-none"
-                  placeholder="Search by fund name or AMC..."
-                  type="text"
-                />
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform"
+                >
+                  Start with a Consultation
+                </Link>
+                <Link
+                  href="/calculator"
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--blue-700)] hover:border-[rgb(var(--blue-700-rgb)/0.35)] transition-colors"
+                >
+                  Explore SIP Calculators
+                </Link>
               </div>
             </div>
-          </div>
 
-          {/* Filter Tabs */}
-          <div className="flex flex-wrap gap-2">
-            {["All Funds", "Equity", "Debt", "Hybrid", "ELSS", "Index", "International"].map(
-              (tab, i) => (
-                <button
-                  key={tab}
-                  className={`px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-[2px] transition-colors border ${
-                    i === 0
-                      ? "bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] text-[var(--text-white)] border-transparent"
-                      : "bg-[var(--gray-50)] text-[var(--text-secondary)] border-[var(--borderSoft)] hover:bg-[var(--blue-50)] hover:text-[var(--blue-700)]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              )
-            )}
+            <div className="relative">
+              <div className="relative aspect-[16/15] rounded-[2rem] overflow-hidden border border-[var(--borderSoft)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--gray-50)]">
+                <Image
+                  src="/slides/pexels-towfiqu-barbhuiya-3440682-9755376.png"
+                  alt="Planning and investing with mutual funds"
+                  fill
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--blue-700-rgb),0.10),rgba(var(--green-700-rgb),0.10))]" />
+              </div>
+
+              <div className="absolute -bottom-8 -left-6 md:-left-10 bg-[var(--surface)] p-5 md:p-6 rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] border border-[var(--borderSoft)] max-w-[360px]">
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-xl bg-[var(--blue-50)] flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[var(--blue-700)]">
+                      calendar_month
+                    </span>
+                  </div>
+                  <div>
+                    <div className="font-headline font-extrabold text-[14px] text-[var(--text-primary)]">
+                      SIP-friendly investing
+                    </div>
+                    <div className="text-[12px] leading-[1.6] text-[var(--text-secondary)]">
+                      Build wealth steadily, month by month.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Main Content ──────────────────────────────────── */}
+      {/* ─── What Are Mutual Funds ─────────────────────────── */}
       <section
-        className="pb-16 md:pb-24"
+        className="py-12 md:py-16"
         role="region"
-        aria-labelledby="mutual-funds-browse-title"
+        aria-labelledby="what-title"
       >
         <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Category Cards */}
-          <div className="lg:col-span-8">
-              <h2
-                id="mutual-funds-browse-title"
-                className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)] mb-6"
-              >
-              Browse by Category
+          <div className="max-w-3xl">
+            <h2
+              id="what-title"
+              className="font-headline text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.2] text-[var(--text-primary)]"
+            >
+              What Are Mutual Funds?
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {categories.map((cat) => (
-                <div
-                  key={cat.title}
-                  className="group p-6 md:p-8 bg-[var(--surface)] rounded-3xl border border-[var(--borderSoft)] hover:border-[rgb(var(--blue-700-rgb)/0.20)] transition-colors flex flex-col justify-between h-72"
-                >
-                  <div>
-                    <div
-                      className={`w-12 h-12 ${cat.iconBg} rounded-full flex items-center justify-center mb-5 ${cat.iconColor} group-hover:scale-110 transition-transform`}
-                    >
-                      <span className="material-symbols-outlined">
-                        {cat.icon}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)]">
-                        {cat.title}
-                      </h3>
-                      <span
-                        className={`text-xs font-bold px-2 py-1 rounded-full ${cat.tagColor}`}
-                      >
-                        {cat.returns}
-                      </span>
-                    </div>
-                      <p className="text-[14px] leading-[1.75] text-[var(--text-secondary)]">
-                      {cat.description}
-                    </p>
-                  </div>
-                  <button
-                    className={`flex items-center gap-2 ${cat.iconColor} font-bold text-[14px] group-hover:gap-4 transition-all mt-4`}
-                  >
-                    View Funds{" "}
-                    <span className="material-symbols-outlined text-sm">
-                      arrow_forward
-                    </span>
-                  </button>
-                </div>
-              ))}
+            <p className="mt-4 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
+              Think of mutual funds like a community garden—many investors
+              contribute small amounts, and together the money is invested into
+              a diversified portfolio.
+            </p>
+          </div>
 
-              {/* Index Funds Wide Card */}
-                <div className="md:col-span-2 group p-6 md:p-8 bg-[var(--gray-50)] rounded-3xl border border-[var(--borderSoft)] hover:border-[rgb(var(--blue-700-rgb)/0.20)] transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                <div className="flex gap-6 items-center">
-                    <div className="w-16 h-16 bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] text-[var(--text-white)] rounded-2xl flex items-center justify-center shrink-0">
-                    <span
-                        className="material-symbols-outlined fill-1 text-3xl"
-                    >
-                      equalizer
-                    </span>
-                  </div>
-                  <div>
-                      <h3 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)] mb-2">
-                      Index Funds
-                    </h3>
-                      <p className="text-[14px] leading-[1.75] text-[var(--text-secondary)] max-w-md">
-                      Low-cost passive investing that tracks market benchmarks
-                      like Nifty 50 or Sensex. Ideal for long-term investors.
-                    </p>
-                  </div>
-                </div>
-                  <button className="btn-primary px-8 py-3 bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] text-[var(--text-white)] font-headline font-bold rounded-xl transition-colors whitespace-nowrap">
-                  Explore Indexing
-                </button>
-              </div>
-            </div>
-
-            {/* Featured Funds Table */}
-            <div>
-              <div className="flex justify-between items-center mb-6">
-                  <h2 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)]">
-                  Top Performing Funds
-                </h2>
-                  <button className="text-[var(--blue-700)] font-bold text-[14px] flex items-center gap-1 hover:gap-2 transition-all">
-                  View All{" "}
-                  <span className="material-symbols-outlined text-sm">
-                    arrow_forward
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Pool money",
+                icon: "groups",
+                description:
+                  "Funds collect contributions from multiple investors.",
+              },
+              {
+                title: "Diversified portfolio",
+                icon: "scatter_plot",
+                description:
+                  "Invests across stocks, bonds, or other assets to spread risk.",
+              },
+              {
+                title: "Managed by experts",
+                icon: "person_search",
+                description:
+                  "Professional fund managers handle research and allocation.",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-3xl p-6 md:p-7 hover:border-[rgb(var(--blue-700-rgb)/0.20)] transition-colors"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[var(--green-50)] flex items-center justify-center mb-6">
+                  <span className="material-symbols-outlined text-[var(--green-700)]">
+                    {card.icon}
                   </span>
-                </button>
+                </div>
+                <div className="font-headline text-[18px] font-extrabold text-[var(--text-primary)]">
+                  {card.title}
+                </div>
+                <div className="mt-2 text-[14px] leading-[1.8] text-[var(--text-secondary)]">
+                  {card.description}
+                </div>
               </div>
-              <div className="space-y-4">
-                {featuredFunds.map((fund) => (
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Why Choose ───────────────────────────────────── */}
+      <section
+        className="bg-[var(--gray-50)] py-12 md:py-16"
+        role="region"
+        aria-labelledby="why-title"
+      >
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+          <div className="max-w-3xl">
+            <h2
+              id="why-title"
+              className="font-headline text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.2] text-[var(--text-primary)]"
+            >
+              Why Choose Mutual Funds?
+            </h2>
+            <p className="mt-4 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
+              Mutual funds combine simplicity and discipline—making them one of
+              the most popular investment options for long-term goals.
+            </p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reasons.map((r) => (
+              <div
+                key={r.title}
+                className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-3xl p-6 hover:border-[rgb(var(--blue-700-rgb)/0.20)] transition-colors"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[var(--blue-50)] flex items-center justify-center mb-6">
+                  <span className="material-symbols-outlined text-[var(--blue-700)]">
+                    {r.icon}
+                  </span>
+                </div>
+                <div className="font-headline text-[18px] font-extrabold text-[var(--text-primary)]">
+                  {r.title}
+                </div>
+                <div className="mt-2 text-[14px] leading-[1.8] text-[var(--text-secondary)]">
+                  {r.description}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Why Trust ─────────────────────────────────────── */}
+      <section
+        className="py-12 md:py-16"
+        role="region"
+        aria-labelledby="trust-title"
+      >
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+          <div className="max-w-3xl">
+            <h2
+              id="trust-title"
+              className="font-headline text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.2] text-[var(--text-primary)]"
+            >
+              Why Trust Sipwala?
+            </h2>
+            <p className="mt-4 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
+              We combine local understanding with professional expertise. We
+              don’t just invest your money—we help you build your financial
+              future.
+            </p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {trust.map((t) => (
+              <div
+                key={t.title}
+                className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-3xl p-6 hover:border-[rgb(var(--blue-700-rgb)/0.20)] transition-colors"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[var(--green-50)] flex items-center justify-center mb-6">
+                  <span className="material-symbols-outlined text-[var(--green-700)]">
+                    {t.icon}
+                  </span>
+                </div>
+                <div className="font-headline text-[18px] font-extrabold text-[var(--text-primary)]">
+                  {t.title}
+                </div>
+                <div className="mt-2 text-[14px] leading-[1.8] text-[var(--text-secondary)]">
+                  {t.description}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Types ─────────────────────────────────────────── */}
+      <section
+        className="bg-[var(--gray-50)] py-12 md:py-16"
+        role="region"
+        aria-labelledby="types-title"
+      >
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+          <div className="max-w-3xl">
+            <h2
+              id="types-title"
+              className="font-headline text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.2] text-[var(--text-primary)]"
+            >
+              Types of Mutual Funds
+            </h2>
+            <p className="mt-4 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
+              Explore mutual fund types based on how they invest—and what you
+              want to achieve.
+            </p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {fundTypes.map((type) => (
+              <div
+                key={type.title}
+                className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-3xl p-6"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[var(--blue-50)] flex items-center justify-center mb-6">
+                  <span className="material-symbols-outlined text-[var(--blue-700)]">
+                    {type.icon}
+                  </span>
+                </div>
+                <div className="font-headline text-[16px] font-extrabold text-[var(--text-primary)]">
+                  {type.title}
+                </div>
+                <div className="mt-2 text-[13px] leading-[1.75] text-[var(--text-secondary)]">
+                  {type.description}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Philosophy + Steps ────────────────────────────── */}
+      <section
+        className="py-12 md:py-16"
+        role="region"
+        aria-labelledby="philosophy-title"
+      >
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            <div className="lg:col-span-5">
+              <h2
+                id="philosophy-title"
+                className="font-headline text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.2] text-[var(--text-primary)]"
+              >
+                Our Investment Philosophy
+              </h2>
+              <p className="mt-4 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
+                We follow a disciplined approach—&quot;Badhate Chalo Bharose Ke
+                Sath&quot;—growing steadily with trust.
+              </p>
+
+              <div className="mt-8 space-y-3">
+                {philosophy.map((item) => (
                   <div
-                    key={fund.name}
-                      className="group flex items-center justify-between p-5 bg-[var(--surface)] rounded-2xl border border-[var(--borderSoft)] hover:border-[rgb(var(--blue-700-rgb)/0.20)] transition-colors"
+                    key={item}
+                    className="flex items-start gap-3 bg-[var(--gray-50)] border border-[var(--borderSoft)] rounded-2xl px-4 py-3"
                   >
-                    <div className="flex items-center gap-4">
-                        <div className="w-11 h-11 bg-[var(--gray-50)] rounded-xl flex items-center justify-center text-[var(--blue-700)] group-hover:bg-[var(--blue-50)] transition-colors shrink-0 border border-[var(--borderSoft)]">
-                        <span className="material-symbols-outlined">
-                          {fund.icon}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2 mb-0.5">
-                            <h4 className="font-headline font-bold text-[14px] leading-[1.75] text-[var(--text-primary)]">
-                            {fund.name}
-                          </h4>
-                          <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${fund.badgeColor}`}
-                          >
-                            {fund.badge}
-                          </span>
-                        </div>
-                          <p className="text-[12px] leading-[1.75] text-[var(--text-secondary)]">
-                          {fund.category}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-6">
-                      <div className="text-right hidden sm:block">
-                          <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-muted)]">
-                          3Y CAGR
-                        </div>
-                          <div className="text-[18px] font-headline font-extrabold leading-[1.2] text-[var(--blue-700)]">
-                          {fund.cagr}
-                        </div>
-                      </div>
-                        <button
-                          className="bg-[var(--gray-50)] p-2 rounded-full text-[var(--blue-700)] hover:bg-[var(--blue-700)] hover:text-[var(--text-white)] transition-colors border border-[var(--borderSoft)]"
-                          aria-label={`Add ${fund.name}`}
-                        >
-                        <span className="material-symbols-outlined text-sm">
-                          add
-                        </span>
-                      </button>
+                    <span className="material-symbols-outlined text-[18px] text-[var(--green-700)] mt-[2px]">
+                      check_circle
+                    </span>
+                    <div className="text-[14px] leading-[1.75] text-[var(--text-secondary)] font-medium">
+                      {item}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-6">
-            {/* Risk Guide */}
-              <div className="bg-[linear-gradient(135deg,var(--navy-800),var(--blue-800))] p-6 md:p-8 rounded-3xl relative overflow-hidden">
-                <div className="relative z-10">
-                  <h4 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-white)] mb-4">
-                  Risk vs Reward Guide
-                </h4>
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-start gap-3">
-                      <span className="material-symbols-outlined text-[var(--green-400)] shrink-0">
-                      info
+            <div className="lg:col-span-7">
+              <div className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-3xl p-7 md:p-9">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[var(--green-50)] flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[var(--green-700)]">
+                      route
                     </span>
-                      <p className="text-[14px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.78)]">
-                      Higher potential returns typically involve higher
-                      volatility and risk of capital loss.
-                    </p>
                   </div>
-                  <div className="flex items-start gap-3">
-                      <span className="material-symbols-outlined text-[var(--green-400)] shrink-0">
-                      analytics
-                    </span>
-                      <p className="text-[14px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.78)]">
-                      Diversification across categories helps mitigate risk
-                      while maintaining growth trajectories.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                      <span className="material-symbols-outlined text-[var(--green-400)] shrink-0">
-                      schedule
-                    </span>
-                      <p className="text-[14px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.78)]">
-                      Longer time horizons generally reduce risk through market
-                      cycle averaging.
-                    </p>
-                  </div>
-                </div>
-                {/* Visual risk ladder */}
-                <div className="space-y-2 mb-6">
-                  {[
-                      { label: "Large Cap", width: "40%", color: "bg-[var(--blue-700)]" },
-                      { label: "Mid Cap", width: "60%", color: "bg-[var(--green-600)]" },
-                      { label: "Small Cap", width: "80%", color: "bg-[var(--gold-base)]" },
-                      { label: "Sectoral", width: "95%", color: "bg-[var(--navy-800)]" },
-                  ].map((r) => (
-                    <div key={r.label} className="flex items-center gap-3">
-                        <span className="text-[12px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.75)] w-20 shrink-0">
-                        {r.label}
-                      </span>
-                        <div className="flex-1 bg-[rgb(var(--text-white-rgb)/0.22)] h-2 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full ${r.color} rounded-full`}
-                          style={{ width: r.width }}
-                        />
-                      </div>
+                  <div>
+                    <div className="font-headline text-[18px] md:text-[22px] font-extrabold text-[var(--text-primary)]">
+                      Start Your Investment Journey
                     </div>
-                  ))}
+                    <div className="mt-2 text-[14px] leading-[1.85] text-[var(--text-secondary)]">
+                      Getting started with mutual funds is easy—with a plan that
+                      matches your goals.
+                    </div>
+
+                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {steps.map((step, index) => (
+                        <div
+                          key={step.title}
+                          className="bg-[var(--gray-50)] border border-[var(--borderSoft)] rounded-2xl p-4"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="w-10 h-10 rounded-xl bg-[var(--blue-50)] flex items-center justify-center">
+                              <span className="material-symbols-outlined text-[var(--blue-700)]">
+                                {step.icon}
+                              </span>
+                            </div>
+                            <div className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-muted)]">
+                              Step {index + 1}
+                            </div>
+                          </div>
+                          <div className="mt-4 font-headline text-[16px] font-extrabold text-[var(--text-primary)]">
+                            {step.title}
+                          </div>
+                          <div className="mt-1 text-[13px] leading-[1.75] text-[var(--text-secondary)]">
+                            {step.description}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-7 flex flex-wrap gap-3">
+                      <Link
+                        href="/contact"
+                        className="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform"
+                      >
+                        Contact Us
+                      </Link>
+                      <Link
+                        href="/calculator"
+                        className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--blue-700)] hover:border-[rgb(var(--blue-700-rgb)/0.35)] transition-colors"
+                      >
+                        Try SIP Calculator
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                  <a className="block text-center py-3 bg-[rgb(var(--text-white-rgb)/0.14)] backdrop-blur-md rounded-xl text-[var(--text-white)] font-bold text-[14px] leading-[1.75] hover:bg-[rgb(var(--text-white-rgb)/0.18)] transition-colors border border-[rgb(var(--text-white-rgb)/0.20)]">
-                  Read Investor Guide
-                </a>
               </div>
-                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[rgb(var(--green-600-rgb)/0.12)] rounded-full blur-3xl" />
-            </div>
 
-            {/* Market Trend */}
-              <div className="p-6 bg-[var(--surface)] rounded-3xl border border-[var(--borderSoft)]">
-                <h4 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)] mb-4">
-                Market Trends
-              </h4>
-                <p className="text-[14px] leading-[1.75] text-[var(--text-secondary)] mb-6">
-                Small-cap funds have seen a 12% inflow increase this quarter. Is
-                your portfolio balanced?
-              </p>
-              {[
-                { label: "Nifty 50", change: "+1.24%", width: "70%", positive: true },
-                { label: "Sensex", change: "+0.98%", width: "62%", positive: true },
-                { label: "Nifty Mid 150", change: "-0.31%", width: "45%", positive: false },
-              ].map((index) => (
-                <div
-                  key={index.label}
-                    className="p-3 bg-[var(--gray-50)] rounded-lg border border-[var(--borderSoft)] mb-3"
-                >
-                  <div className="flex justify-between items-center mb-2">
-                      <span className="text-[11px] font-bold uppercase tracking-[2px] text-[var(--text-muted)]">
-                      {index.label}
-                    </span>
-                    <span
-                        className={`text-[11px] font-bold ${index.positive ? "text-[var(--green-600)]" : "text-[var(--gold-dark)]"}`}
-                    >
-                      {index.change}
+              <div className="mt-6 bg-[var(--gray-50)] border border-[var(--borderSoft)] rounded-3xl p-7 md:p-9">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[var(--blue-50)] flex items-center justify-center shrink-0">
+                    <span className="material-symbols-outlined text-[var(--blue-700)]">
+                      warning
                     </span>
                   </div>
-                    <div className="h-1.5 w-full bg-[var(--gray-200)] rounded-full overflow-hidden">
-                    <div
-                        className={`h-full ${index.positive ? "bg-[var(--green-600)]" : "bg-[var(--gold-base)]"} rounded-full`}
-                      style={{ width: index.width }}
-                    />
+                  <div>
+                    <div className="font-headline text-[18px] md:text-[22px] font-extrabold text-[var(--text-primary)]">
+                      Important Note
+                    </div>
+                    <p className="mt-3 text-[15px] md:text-[16px] leading-[1.9] text-[var(--text-secondary)]">
+                      Investments in mutual funds are subject to market risks.
+                      Please read all scheme-related documents carefully before
+                      investing.
+                    </p>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-
-            {/* SIP CTA */}
-              <div className="p-6 bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] rounded-3xl text-[var(--text-white)]">
-              <span className="material-symbols-outlined text-3xl mb-3 block">
-                calculate
-              </span>
-                <h4 className="font-headline text-[18px] font-bold leading-[1.3] mb-2">
-                Plan Your SIP
-              </h4>
-                <p className="text-[rgb(var(--text-white-rgb)/0.80)] text-[14px] leading-[1.75] mb-4">
-                Calculate how much you need to invest today for tomorrow&apos;s goal.
-              </p>
-              <a
-                href="/calculator"
-                  className="btn-primary block text-center py-2.5 bg-[var(--text-white)] text-[var(--blue-700)] font-bold text-[14px] leading-[1.75] rounded-xl hover:bg-[rgb(var(--text-white-rgb)/0.95)] transition-colors"
-              >
-                Open Calculator
-              </a>
-            </div>
-          </aside>
+          </div>
         </div>
+      </section>
+
+      {/* ─── Closing ───────────────────────────────────────── */}
+      <section
+        className="bg-[var(--gray-50)] py-12 md:py-16"
+        role="region"
+        aria-labelledby="closing-title"
+      >
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+          <div className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-3xl p-8 md:p-10">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[var(--green-50)] flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[var(--green-700)]">
+                  eco
+                </span>
+              </div>
+              <div>
+                <h2
+                  id="closing-title"
+                  className="font-headline text-[22px] md:text-[30px] font-extrabold tracking-tight text-[var(--text-primary)]"
+                >
+                  Let’s Grow Together
+                </h2>
+                <p className="mt-3 text-[15px] md:text-[16px] leading-[1.9] text-[var(--text-secondary)] max-w-3xl">
+                  Mutual funds are not just investments—they are a path to
+                  financial independence and long-term security. Join Sipwala and
+                  become part of a growing community focused on smart investing
+                  and steady progress.
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Link
+                    href="/contact"
+                    className="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform"
+                  >
+                    Connect with Sipwala
+                  </Link>
+                  <Link
+                    href="/services/smallcase"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--blue-700)] hover:border-[rgb(var(--blue-700-rgb)/0.35)] transition-colors"
+                  >
+                    Explore Smallcase
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

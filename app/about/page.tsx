@@ -72,7 +72,8 @@ export default function AboutPage() {
     <>
       {/* ─── Hero ──────────────────────────────────────────── */}
       <section
-        className="pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden"
+        id="company-profile"
+        className="pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden scroll-mt-24"
         role="region"
         aria-labelledby="about-hero-title"
       >
@@ -147,7 +148,8 @@ export default function AboutPage() {
 
       {/* ─── Milestones ────────────────────────────────────── */}
       <section
-        className="bg-[var(--gray-50)] py-16 md:py-24"
+        id="who-we-are"
+        className="bg-[var(--gray-50)] py-16 md:py-24 scroll-mt-24"
         role="region"
         aria-labelledby="about-milestones-title"
       >
@@ -198,7 +200,8 @@ export default function AboutPage() {
 
       {/* ─── Leadership Team ───────────────────────────────── */}
       <section
-        className="py-16 md:py-24"
+        id="meet-our-founder"
+        className="py-16 md:py-24 scroll-mt-24"
         role="region"
         aria-labelledby="about-leadership-title"
       >
@@ -245,7 +248,8 @@ export default function AboutPage() {
 
       {/* ─── Trust Badges ──────────────────────────────────── */}
       <section
-        className="bg-[var(--surface)] py-16 md:py-24"
+        id="gallery"
+        className="bg-[var(--surface)] py-16 md:py-24 scroll-mt-24"
         role="region"
         aria-labelledby="about-badges-title"
       >
