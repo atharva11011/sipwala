@@ -105,15 +105,8 @@ export default function Footer() {
                   aria-label="Sipwala"
                   className="inline-flex"
                 >
-                  <span className="font-headline font-extrabold tracking-tight leading-none text-[22px] text-[var(--text-white)]">
-                    <span className="relative inline-block">
-                      <span className="relative z-10">SIP</span>
-                      <span
-                        aria-hidden="true"
-                        className="absolute left-0 right-0 -bottom-1 h-[3px] rounded-full bg-[var(--green-400)]/90"
-                      />
-                    </span>
-                    <span className="text-[var(--blue-400)]">wala</span>
+                  <span className="font-headline font-extrabold tracking-tight leading-none text-[34px] text-[var(--red-400)]">
+                    SIPWALA
                   </span>
                 </Link>
               </div>
