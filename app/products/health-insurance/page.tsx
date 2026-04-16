@@ -65,7 +65,7 @@ const rightTime = [
 export default function HealthInsurancePage() {
   return (
     <>
-      {/* ─── Hero (unique: stacked stats + image mosaic) ───── */}
+      {/* ─── Hero (single image) ──────────────────────────── */}
       <section
         className="pt-24 md:pt-32 pb-12 md:pb-16 overflow-hidden"
         role="region"
@@ -127,43 +127,15 @@ export default function HealthInsurancePage() {
             </div>
 
             <div className="lg:col-span-6">
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-12">
-                  <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden border border-[var(--borderSoft)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--gray-50)]">
-                    <Image
-                      src="/slides/pexels-ravi-roshan-2875998-14907378.png"
-                      alt="Health care and protection"
-                      fill
-                      sizes="(min-width: 1024px) 560px, 100vw"
-                      className="object-cover"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--green-700-rgb),0.10),rgba(var(--blue-700-rgb),0.10))]" />
-                  </div>
-                </div>
-
-                <div className="col-span-6">
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[var(--borderSoft)] bg-[var(--gray-50)]">
-                    <Image
-                      src="/slides/pexels-towfiqu-barbhuiya-3440682-10972831.png"
-                      alt="Policy documents"
-                      fill
-                      sizes="(min-width: 1024px) 270px, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="col-span-6">
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[var(--borderSoft)] bg-[var(--gray-50)]">
-                    <Image
-                      src="/slides/pexels-towfiqu-barbhuiya-3440682-9755376.png"
-                      alt="Planning and support"
-                      fill
-                      sizes="(min-width: 1024px) 270px, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
+              <div className="relative aspect-[4/3] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-[rgb(var(--navy-950-rgb)/0.28)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--surface)]">
+                <Image
+                  src="/slides/pexels-ravi-roshan-2875998-14907378.png"
+                  alt="Health care and protection"
+                  fill
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
           </div>

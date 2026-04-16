@@ -16,10 +16,24 @@ function titleFromFilename(filename: string) {
 
 async function getLogos(): Promise<Logo[]> {
   const logosDir = path.join(process.cwd(), "public", "logos");
-  const entries = await fs.readdir(logosDir);
+  let entries: string[];
+  try {
+    entries = await fs.readdir(logosDir);
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      (error as { code?: string }).code === "ENOENT"
+    ) {
+      return [];
+    }
+    throw error;
+  }
 
   return entries
     .filter((name) => name.toLowerCase().endsWith(".png"))
+    .filter((name) => !name.toLowerCase().includes("sipwala"))
     .sort((a, b) =>
       a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
     )
@@ -31,6 +45,8 @@ async function getLogos(): Promise<Logo[]> {
 
 export default async function AssociatedWithSection() {
   const logos = await getLogos();
+
+  if (logos.length === 0) return null;
 
   return (
     <section

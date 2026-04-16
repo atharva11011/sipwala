@@ -176,7 +176,7 @@ export default function LifeInsurancePage() {
 
             <div className="lg:col-span-6">
               <div className="relative">
-                <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden border border-[var(--borderSoft)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--gray-50)]">
+                <div className="relative aspect-[4/3] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-[rgb(var(--navy-950-rgb)/0.28)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--surface)]">
                   <Image
                     src="/slides/pexels-kindelmedia-6774947.png"
                     alt="Family protection and life planning"
@@ -185,28 +185,6 @@ export default function LifeInsurancePage() {
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--blue-700-rgb),0.12),rgba(var(--green-700-rgb),0.10))]" />
-                </div>
-
-                <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div className="relative aspect-[16/11] rounded-2xl overflow-hidden border border-[var(--borderSoft)] bg-[var(--gray-50)]">
-                    <Image
-                      src="/slides/pexels-ambam-29063346.png"
-                      alt="Secure planning"
-                      fill
-                      sizes="(min-width: 1024px) 260px, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="relative aspect-[16/11] rounded-2xl overflow-hidden border border-[var(--borderSoft)] bg-[var(--gray-50)]">
-                    <Image
-                      src="/slides/pexels-towfiqu-barbhuiya-3440682-10972831.png"
-                      alt="Documents and coverage details"
-                      fill
-                      sizes="(min-width: 1024px) 260px, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
                 </div>
               </div>
             </div>

@@ -9,7 +9,7 @@ import { slideInLeft, staggerContainer } from "@/lib/animations";
 const siteMapLinks = [
   { label: "Home", href: "/" },
   { label: "My Story", href: "/about" },
-  { label: "Services", href: "/mutual-funds" },
+  { label: "Services", href: "/services" },
   { label: "Success Stories", href: "/#success-stories" },
   { label: "SIP Calculator", href: "/calculator" },
   { label: "Free Resources", href: "/blog" },
@@ -24,6 +24,9 @@ const legalLinks = [
   { label: "Grievance Redressal", href: "/grievance-redressal" },
   { label: "Refund Policy", href: "/refund-policy" },
 ];
+
+const IMPORTANT_LINK_TEXT =
+  "Important Links | Disclaimer | Disclosure | SID/SAI/KIM | Code of Conduct | SEBI Circulars | AMFI Risk Factors";
 
 const fadeUpDelay = (delay: number) => ({
   hidden: { opacity: 0, y: 24 },
@@ -56,7 +59,7 @@ export default function Footer() {
       className="w-full"
     >
       {/* Main footer body */}
-      <div className="relative overflow-hidden bg-[var(--teal-dark)]">
+      <div className="relative overflow-hidden border-t border-[rgb(var(--text-white-rgb)/0.08)] bg-[radial-gradient(1200px_700px_at_-10%_-20%,rgb(var(--blue-600-rgb)/0.35),transparent_60%),linear-gradient(180deg,rgb(var(--blue-900-rgb)/0.98),rgb(var(--navy-950-rgb)/0.99))]">
         {/* Decorative geometry */}
         <svg
           className="absolute inset-y-0 right-0 w-[65%] max-w-[900px] h-full pointer-events-none text-[rgb(var(--text-white-rgb)/0.07)]"
@@ -136,7 +139,7 @@ export default function Footer() {
                       className={`text-[14px] transition-colors ${
                         isActive(l.href)
                           ? "text-[rgb(var(--text-white-rgb)/0.95)] font-medium"
-                          : "text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--green-400)]"
+                          : "text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--blue-200)]"
                       }`}
                     >
                       {l.label}
@@ -159,7 +162,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[14px] text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--green-400)] transition-colors"
+                      className="text-[14px] text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--blue-200)] transition-colors"
                     >
                       {l.label}
                     </Link>
@@ -185,7 +188,7 @@ export default function Footer() {
                     href={s.href}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    className="w-10 h-10 rounded-lg border border-[rgb(var(--text-white-rgb)/0.15)] bg-transparent flex items-center justify-center text-[rgb(var(--text-white-rgb)/0.82)] transition-all hover:text-[var(--green-400)] hover:border-[rgb(var(--text-white-rgb)/0.22)] hover:bg-[rgb(var(--text-white-rgb)/0.08)]"
+                    className="w-10 h-10 rounded-lg border border-[rgb(var(--text-white-rgb)/0.15)] bg-transparent flex items-center justify-center text-[rgb(var(--text-white-rgb)/0.82)] transition-all hover:text-[var(--blue-200)] hover:border-[rgb(var(--blue-200-rgb)/0.35)] hover:bg-[rgb(var(--blue-200-rgb)/0.10)]"
                     aria-label={s.label}
                   >
                     <s.icon size={18} />
@@ -205,16 +208,61 @@ export default function Footer() {
               </motion.button>
             </motion.div>
           </div>
+
+          {/* Regulatory / risk factors */}
+          <div className="mt-12 pt-8 border-t border-[rgb(var(--text-white-rgb)/0.12)]">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <div className="text-[12px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.86)]">
+                <Link
+                  href="/privacy-policy"
+                  className="font-bold hover:text-[var(--blue-200)] transition-colors"
+                >
+                  Privacy Policy
+                </Link>
+                <span className="mx-2 text-[rgb(var(--text-white-rgb)/0.35)]" aria-hidden="true">
+                  |
+                </span>
+                <span className="font-bold">SIPWALA</span>
+              </div>
+
+              <p className="max-w-[1000px] text-[12px] leading-[1.9] text-[rgb(var(--text-white-rgb)/0.72)]">
+                <span className="font-bold text-[rgb(var(--text-white-rgb)/0.88)]">
+                  Risk Factors – Investments in Mutual Funds are subject to Market Risks.
+                </span>{" "}
+                Read all scheme related documents carefully before investing.
+                Mutual Fund Schemes do not assure or guarantee any returns. Past
+                performances of any Mutual Fund Scheme may or may not be
+                sustained in future. There is no guarantee that the investment
+                objective of any suggested scheme shall be achieved. All
+                existing and prospective investors are advised to check and
+                evaluate the Exit loads and other cost structure (TER)
+                applicable at the time of making the investment before
+                finalizing on any investment decision for Mutual Funds schemes.
+                We deal in Regular Plans only for Mutual Fund Schemes and earn
+                a Trailing Commission on client investments. Disclosure For
+                Commission earnings is made to clients at the time of
+                investments.
+              </p>
+
+              <p className="max-w-[1000px] text-[12px] leading-[1.9] text-[rgb(var(--text-white-rgb)/0.72)]">
+                AMFI Registered Mutual Fund Distributor – ARN-307703 | Date of initial registration – 10-SEP-2024 | Current validity of ARN – 09-SEP-2027
+              </p>
+
+              <p className="max-w-[1000px] text-[12px] leading-[1.9] text-[rgb(var(--text-white-rgb)/0.72)]">
+                {IMPORTANT_LINK_TEXT}
+              </p>
+            </div>
+          </div>
         </motion.div>
       </div>
 
       {/* Copyright strip */}
-      <div className="bg-[var(--teal-mid)] px-5 lg:px-8 py-3.5 text-center">
+      <div className="bg-[rgb(var(--blue-900-rgb)/0.90)] border-t border-[rgb(var(--text-white-rgb)/0.10)] px-5 lg:px-8 py-3.5 text-center">
         <div className="max-w-[1200px] mx-auto">
           <p className="text-[12px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.80)] font-normal inline-flex items-center justify-center gap-4">
             <span
               aria-hidden="true"
-              className="hidden sm:inline-block w-[60px] h-px bg-[rgb(var(--text-primary-rgb)/0.2)]"
+              className="hidden sm:inline-block w-[60px] h-px bg-[rgb(var(--text-white-rgb)/0.18)]"
             />
             <span>
               Copyright © 2025, SIPwala. All Rights Reserved. Mutual fund
@@ -222,7 +270,7 @@ export default function Footer() {
             </span>
             <span
               aria-hidden="true"
-              className="hidden sm:inline-block w-[60px] h-px bg-[rgb(var(--text-primary-rgb)/0.2)]"
+              className="hidden sm:inline-block w-[60px] h-px bg-[rgb(var(--text-white-rgb)/0.18)]"
             />
           </p>
         </div>

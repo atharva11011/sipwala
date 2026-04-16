@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Portfolio Management Services (PMS)",
   description:
-    "Portfolio Management Services (PMS) offer a premium, personalized investment experience where professionals manage your portfolio with a focus on growth, strategy, and risk management.",
+    "Portfolio Management Services (PMS) is a tailored approach where experts manage your portfolio, aiming to optimize returns and minimize risks.",
 };
 
 export default function PmsPage() {
@@ -12,69 +11,41 @@ export default function PmsPage() {
     <>
       <section className="pt-24 md:pt-32 pb-14" aria-labelledby="pms-title">
         <div className="max-w-[900px] mx-auto px-5 lg:px-8">
-          <div className="text-[13px] font-medium text-[var(--text-muted)]">
-            Home / PMS
-          </div>
-
+          <span className="inline-flex items-center px-[14px] py-[5px] rounded-[20px] text-[11px] font-bold tracking-[2px] uppercase bg-[var(--blue-50)] text-[var(--blue-700)] border border-[rgb(var(--blue-700-rgb)/0.18)] mb-3">
+            Portfolio Management Services (PMS)
+          </span>
           <h1
             id="pms-title"
-            className="mt-4 font-headline text-[38px] md:text-[56px] font-black tracking-tight leading-[1.08] text-[var(--text-primary)]"
+            className="font-headline text-[34px] md:text-[52px] font-black tracking-tight leading-[1.12] text-[var(--text-primary)]"
           >
-            Invest with Confidence through PMS 🌟
+            Invest with Confidence through Portfolio Management Services (PMS)
+            at sipwala!
           </h1>
 
-          <div className="mt-6 space-y-4 text-[16px] md:text-[17px] leading-[1.9] text-[var(--text-secondary)]">
+          <div className="mt-6 text-[16px] md:text-[17px] leading-[1.95] text-[var(--text-secondary)]">
             <p>
-              Welcome to Sipwala, your trusted partner in building and managing
-              wealth.
-            </p>
-            <p>
-              Portfolio Management Services (PMS) offer a premium and
-              personalized investment experience, where your investments are
-              handled by experts with a clear focus on growth, strategy, and
-              risk management.
-            </p>
-            <p>
-              If you&apos;re looking to move beyond traditional investing, PMS is
-              your gateway to smarter, more structured wealth creation.
+              Greetings from Amravati! At sipwala, we&apos;re dedicated to elevating
+              your financial journey. Let&apos;s explore the realm of Portfolio
+              Management Services (PMS)—a sophisticated investment avenue
+              designed to cater to your unique financial goals.
             </p>
           </div>
 
           <div className="mt-10">
             <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              What is PMS? 💼
+              What is PMS?
             </h2>
             <p className="mt-3 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              Portfolio Management Services (PMS) is a customized investment
-              solution where professional fund managers manage your portfolio on
-              your behalf.
+              Picture having a skilled financial advisor solely dedicated to
+              nurturing and growing your investments. PMS is precisely that—a
+              tailored approach where our experts manage your portfolio, aiming
+              to optimize returns and minimize risks.
             </p>
-
-            <p className="mt-5 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              Think of it as having a dedicated financial expert who:
-            </p>
-            <ul role="list" className="mt-4 space-y-3">
-              {[
-                "Understands your financial goals",
-                "Designs a personalized investment strategy",
-                "Actively manages your portfolio",
-                "Continuously monitors and optimizes performance",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-[18px] text-[var(--green-700)] mt-[2px]">
-                    check_circle
-                  </span>
-                  <span className="text-[15px] leading-[1.8] text-[var(--text-secondary)]">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="mt-12">
             <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              Why Choose PMS? 📈
+              Why Choose PMS as Your Investment Partner?
             </h2>
 
             <ol className="mt-5 space-y-6">
@@ -83,44 +54,42 @@ export default function PmsPage() {
                   1. Expert Guidance
                 </div>
                 <div className="mt-2 text-[15px] leading-[1.9] text-[var(--text-secondary)]">
-                  Get access to experienced professionals who make informed
-                  investment decisions based on market research and insights.
+                  PMS puts seasoned investment professionals at your service.
+                  Benefit from their market insights, strategic decisions, and
+                  personalized advice to navigate the complex financial
+                  landscape.
                 </div>
               </li>
               <li>
                 <div className="font-headline font-extrabold text-[16px] text-[var(--text-primary)]">
-                  2. Customized Investment Strategy
+                  2. Customized Approach
                 </div>
                 <div className="mt-2 text-[15px] leading-[1.9] text-[var(--text-secondary)]">
-                  Your portfolio is tailored to your financial goals, risk
-                  appetite, and investment horizon.
+                  One size doesn&apos;t fit all, and neither should your investment
+                  strategy. PMS allows for a personalized approach, aligning
+                  your portfolio with your financial aspirations, risk
+                  tolerance, and investment horizon.
                 </div>
               </li>
               <li>
                 <div className="font-headline font-extrabold text-[16px] text-[var(--text-primary)]">
-                  3. Diversified Opportunities
+                  3. Diverse Investment Opportunities
                 </div>
                 <div className="mt-2 text-[15px] leading-[1.9] text-[var(--text-secondary)]">
-                  Invest across multiple asset classes including equities, debt,
-                  and alternative investments.
+                  PMS opens doors to a world of investment opportunities. From
+                  equities to fixed income, real estate, and more, enjoy a
+                  diversified portfolio managed by experts to optimize returns.
                 </div>
               </li>
               <li>
                 <div className="font-headline font-extrabold text-[16px] text-[var(--text-primary)]">
-                  4. Active Portfolio Management
+                  4. Transparent and Efficient Management
                 </div>
                 <div className="mt-2 text-[15px] leading-[1.9] text-[var(--text-secondary)]">
-                  Your investments are regularly monitored and adjusted to
-                  align with market conditions.
-                </div>
-              </li>
-              <li>
-                <div className="font-headline font-extrabold text-[16px] text-[var(--text-primary)]">
-                  5. Transparency &amp; Control
-                </div>
-                <div className="mt-2 text-[15px] leading-[1.9] text-[var(--text-secondary)]">
-                  Get clear visibility into your portfolio holdings and
-                  performance at all times.
+                  PMS provides transparency in portfolio holdings and
+                  performance, giving you a clear view of how your investments
+                  are faring. Enjoy the efficiency of professional management
+                  tailored to your financial objectives.
                 </div>
               </li>
             </ol>
@@ -128,135 +97,50 @@ export default function PmsPage() {
 
           <div className="mt-12">
             <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              Our Approach at Sipwala
-            </h2>
-
-            <ul role="list" className="mt-5 space-y-3">
-              {[
-                "Goal-Based Planning – Every investment starts with your financial goals",
-                "Research-Driven Decisions – Backed by strong analysis and insights",
-                "Risk Management – Balancing growth with stability",
-                "Long-Term Wealth Creation – Focused on sustainable returns",
-                "Continuous Monitoring – Regular tracking and optimization",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="material-symbols-outlined text-[18px] text-[var(--blue-700)] mt-[2px]">
-                    arrow_right
-                  </span>
-                  <span className="text-[15px] leading-[1.85] text-[var(--text-secondary)]">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-12">
-            <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              Why Trust Sipwala for PMS? 🤝
+              Why Trust sipwala for PMS?
             </h2>
             <p className="mt-3 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              We understand the aspirations of our clients and bring a personal
-              touch to professional investing.
+              We understand the pulse of Amravati and the aspirations of its
+              people. At sipwala, we combine financial expertise with a
+              personalized touch, ensuring your financial success is our
+              primary focus.
             </p>
 
-            <div className="mt-6">
-              <div className="font-headline font-extrabold text-[16px] text-[var(--text-primary)]">
-                What Sets Us Apart:
-              </div>
-              <ul role="list" className="mt-4 space-y-3">
-                {[
-                  {
-                    title: "Tailored Portfolio Solutions",
-                    desc: "Strategies designed specifically for you",
-                  },
-                  {
-                    title: "Stress-Free Investing",
-                    desc: "We handle the complexities while you focus on your life",
-                  },
-                  {
-                    title: "Strategic Wealth Creation",
-                    desc: "Smart allocation and active management for better outcomes",
-                  },
-                  {
-                    title: "Trusted Relationship",
-                    desc: "Built on transparency, ethics, and long-term commitment",
-                  },
-                ].map((item) => (
-                  <li key={item.title} className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-[18px] text-[var(--green-700)] mt-[2px]">
-                      check_circle
-                    </span>
-                    <span className="text-[15px] leading-[1.85] text-[var(--text-secondary)]">
-                      <span className="font-extrabold text-[var(--text-primary)]">
-                        {item.title}
-                      </span>
-                      <span className="text-[var(--text-secondary)]"> — {item.desc}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-12">
-            <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              Who Should Opt for PMS?
-            </h2>
-            <p className="mt-3 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              PMS is ideal for:
-            </p>
-            <ul role="list" className="mt-4 space-y-3">
+            <ul role="list" className="mt-6 space-y-4">
               {[
-                "Investors seeking personalized investment management",
-                "Individuals with a long-term wealth creation mindset",
-                "Investors looking for professional expertise",
-                "Those who prefer active management over passive investing",
+                {
+                  title: "Tailored Portfolio Management",
+                  desc: "PMS is your bespoke investment solution, with strategies crafted to match your unique financial goals and risk tolerance.",
+                },
+                {
+                  title: "Stress-Free Investing",
+                  desc: "Say goodbye to the stress of managing your portfolio. Our experts handle the complexities, allowing you to focus on what you do best while your investments flourish.",
+                },
+                {
+                  title: "Strategic Wealth Creation",
+                  desc: "PMS aims for wealth creation through strategic investment decisions. Benefit from a dynamic approach to financial growth tailored to your needs.",
+                },
               ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
+                <li key={item.title} className="flex items-start gap-3">
                   <span className="material-symbols-outlined text-[18px] text-[var(--green-700)] mt-[2px]">
                     check_circle
                   </span>
                   <span className="text-[15px] leading-[1.85] text-[var(--text-secondary)]">
-                    {item}
+                    <span className="font-extrabold text-[var(--text-primary)]">
+                      {item.title}:
+                    </span>{" "}
+                    {item.desc}
                   </span>
                 </li>
               ))}
             </ul>
-          </div>
 
-          <div className="mt-12">
-            <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              Step into Smarter Investing
-            </h2>
-            <p className="mt-3 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              With PMS, you don&apos;t just invest—you invest strategically.
-            </p>
-            <p className="mt-4 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              Let Sipwala help you unlock the full potential of your wealth with
-              expert guidance and personalized strategies.
-            </p>
-          </div>
-
-          <div className="mt-12 bg-[var(--gray-50)] border border-[var(--borderSoft)] rounded-3xl p-7 md:p-9">
-            <h2 className="font-headline text-[22px] md:text-[28px] font-extrabold text-[var(--text-primary)]">
-              Contact Us
-            </h2>
-            <p className="mt-3 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              Ready to experience professional portfolio management?
-            </p>
-            <p className="mt-2 text-[16px] leading-[1.9] text-[var(--text-secondary)]">
-              Connect with Sipwala today and take a confident step toward
-              structured and smart wealth creation.
-            </p>
-
-            <div className="mt-6">
-              <Link
-                href="/contact"
-                className="btn-primary inline-flex items-center justify-center px-6 py-3 rounded-xl font-headline text-sm font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))]"
-              >
-                Connect with Sipwala
-              </Link>
+            <div className="mt-12 text-[16px] md:text-[17px] leading-[1.95] text-[var(--text-secondary)]">
+              <p>
+                Step into a new era of investment confidence with Groww Lakshmi
+                Finserv Pvt Ltd&apos;s Portfolio Management Services. Let&apos;s sculpt
+                a prosperous future together.
+              </p>
             </div>
           </div>
         </div>

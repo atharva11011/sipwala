@@ -112,28 +112,32 @@ export default function ContactSection() {
                   <span className="block font-bold text-[var(--text-primary)] mb-1">
                     HQ Office
                   </span>
-                  Floor 12, Financial District Skyline Tower,
+                  B-5, Ashadeep Complex, Nawathe Square,
                   <br />
-                  Bandra Kurla Complex, Mumbai 400051
+                  Amravati, Maharashtra 444607
                 </address>
                 <div className="flex flex-col gap-3">
                   <a
-                    href="mailto:hello@sipwala.com"
+                    href="mailto:santoshbeharelic@gmail.com"
                     className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-[var(--blue-700)] transition-colors group"
                   >
                     <span className="material-symbols-outlined bg-[var(--surface)] p-2 rounded-lg text-sm group-hover:bg-[var(--blue-50)] group-hover:text-[var(--blue-700)] transition-colors">
                       mail
                     </span>
-                    <span className="font-medium text-[14px] leading-[1.75]">hello@sipwala.com</span>
+                    <span className="font-medium text-[14px] leading-[1.75]">
+                      santoshbeharelic@gmail.com
+                    </span>
                   </a>
                   <a
-                    href="tel:+912212345678"
+                    href="tel:+918554802244"
                     className="flex items-center gap-3 text-[var(--text-secondary)] hover:text-[var(--blue-700)] transition-colors group"
                   >
                     <span className="material-symbols-outlined bg-[var(--surface)] p-2 rounded-lg text-sm group-hover:bg-[var(--blue-50)] group-hover:text-[var(--blue-700)] transition-colors">
                       call
                     </span>
-                    <span className="font-medium text-[14px] leading-[1.75]">+91 22 1234 5678</span>
+                    <span className="font-medium text-[14px] leading-[1.75]">
+                      +91 8554802244
+                    </span>
                   </a>
                   <a
                     href="#"
@@ -148,65 +152,16 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="h-56 rounded-3xl overflow-hidden relative group bg-[linear-gradient(135deg,rgb(var(--green-600-rgb)/0.14),rgb(var(--blue-700-rgb)/0.14))] border border-[var(--borderSoft)]">
-              <div className="absolute inset-0">
-                <svg
-                  className="w-full h-full opacity-30 text-[var(--green-600)]"
-                  viewBox="0 0 400 240"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {[...Array(8)].map((_, i) => (
-                    <line
-                      key={`h${i}`}
-                      x1="0"
-                      y1={i * 32}
-                      x2="400"
-                      y2={i * 32}
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                  ))}
-                  {[...Array(14)].map((_, i) => (
-                    <line
-                      key={`v${i}`}
-                      x1={i * 32}
-                      y1="0"
-                      x2={i * 32}
-                      y2="240"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                  ))}
-                  <circle cx="200" cy="120" r="8" fill="currentColor" />
-                  <circle
-                    cx="200"
-                    cy="120"
-                    r="20"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    opacity="0.5"
-                  />
-                  <circle
-                    cx="200"
-                    cy="120"
-                    r="35"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    opacity="0.3"
-                  />
-                </svg>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 bg-[rgb(var(--text-white-rgb)/0.90)] backdrop-blur-md p-3 rounded-2xl flex justify-between items-center border border-[rgb(var(--text-primary-rgb)/0.06)]">
-                <span className="text-[14px] leading-[1.75] font-bold text-[var(--text-primary)]">
-                  View on Google Maps
-                </span>
-                <span className="material-symbols-outlined text-[var(--blue-700)] text-sm">
-                  open_in_new
-                </span>
-              </div>
+            {/* Map */}
+            <div className="h-56 md:h-64 rounded-3xl overflow-hidden relative border border-[var(--borderSoft)] bg-[var(--gray-50)]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d75473.15704168475!2d77.71618577910155!3d20.909523999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd6a4c9805fde05%3A0x4b4ff9e5e1e506e2!2sGroww%20Lakshmi%20Finserv%20Pvt%20Ltd%20-%20SANTOSH%20BEHARE%2C%20CFP!5e1!3m2!1sen!2sin!4v1776256464305!5m2!1sen!2sin"
+                className="absolute inset-0 h-full w-full border-0"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Groww Lakshmi Finserv Pvt Ltd - Santosh Behare, CFP (Google Map)"
+              />
             </div>
           </div>
         </div>

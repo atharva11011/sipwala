@@ -1,6 +1,5 @@
 "use client";
 import { useState, useMemo } from "react";
-import Link from "next/link";
 
 // ─── Helpers ──────────────────────────────────────────────
 function formatINR(amount: number): string {
@@ -23,28 +22,6 @@ function calcSIP(monthly: number, ratePercent: number, years: number) {
   const growth = totalValue / totalInvested;
   return { totalValue, totalInvested, totalReturns, growth };
 }
-
-// ─── Recommended Funds ────────────────────────────────────
-const funds = [
-  {
-    icon: "show_chart",
-    name: "Quant Small Cap Fund",
-    category: "High Risk • Equity: Small Cap",
-    cagr: "34.2%",
-  },
-  {
-    icon: "account_balance",
-    name: "HDFC Index Fund",
-    category: "Moderate Risk • Nifty 50",
-    cagr: "18.5%",
-  },
-  {
-    icon: "eco",
-    name: "Parag Parikh Flexi Cap",
-    category: "Moderate Risk • Multi Cap",
-    cagr: "22.8%",
-  },
-];
 
 // ─── Slider ───────────────────────────────────────────────
 function Slider({
@@ -342,75 +319,6 @@ export default function CalculatorPage() {
               </div>
             </div>
           </div>
-        </div>
-        </div>
-      </section>
-
-      {/* ─── Recommended Funds ─────────────────────────────── */}
-      <section
-        className="pb-16 md:pb-24"
-        role="region"
-        aria-labelledby="calculator-recommended-title"
-      >
-        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
-            <div className="max-w-xl">
-              <h2
-                id="calculator-recommended-title"
-                className="font-headline text-[28px] md:text-[40px] font-extrabold leading-[1.2] text-[var(--text-primary)] mb-[14px]"
-              >
-              Recommended for Your Goal
-            </h2>
-              <p className="text-[16px] leading-[1.8] text-[var(--text-secondary)]">
-              Based on your {years}-year horizon, these high-growth potential
-              funds are curated by our experts.
-            </p>
-          </div>
-          <Link
-            href="/mutual-funds"
-              className="text-[var(--blue-700)] font-bold text-[14px] flex items-center gap-2 group shrink-0"
-          >
-            View all funds
-            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-sm">
-              arrow_forward
-            </span>
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {funds.map((fund) => (
-            <div
-              key={fund.name}
-              className="bg-[var(--surface)] p-6 md:p-8 rounded-3xl transition-colors border border-[var(--borderSoft)] hover:border-[rgb(var(--blue-700-rgb)/0.20)] hover:bg-[var(--blue-50)] group"
-            >
-              <div className="w-12 h-12 bg-[var(--gray-50)] rounded-xl mb-6 flex items-center justify-center group-hover:bg-[var(--blue-50)] transition-colors border border-[var(--borderSoft)]">
-                <span className="material-symbols-outlined text-[var(--blue-700)]">
-                  {fund.icon}
-                </span>
-              </div>
-              <h4 className="font-headline font-bold text-[18px] leading-[1.3] text-[var(--text-primary)] mb-2">
-                {fund.name}
-              </h4>
-              <p className="text-[14px] leading-[1.75] text-[var(--text-secondary)] mb-6">
-                {fund.category}
-              </p>
-              <div className="flex justify-between items-end border-t border-[var(--borderSoft)] pt-6">
-                <div>
-                  <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-muted)]">
-                    3Y CAGR
-                  </span>
-                  <p className="text-[28px] font-headline font-extrabold leading-[1.2] text-[var(--blue-700)]">
-                    {fund.cagr}
-                  </p>
-                </div>
-                <button
-                  className="bg-[var(--gray-50)] p-2 rounded-full text-[var(--blue-700)] hover:bg-[var(--blue-700)] hover:text-[var(--text-white)] transition-colors border border-[var(--borderSoft)]"
-                  aria-label={`Add ${fund.name}`}
-                >
-                  <span className="material-symbols-outlined text-sm">add</span>
-                </button>
-              </div>
-            </div>
-          ))}
         </div>
         </div>
       </section>

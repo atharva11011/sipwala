@@ -151,47 +151,18 @@ export default function GeneralInsurancePage() {
 
             <div className="lg:col-span-6">
               <div className="relative">
-                <div className="grid grid-cols-12 gap-4">
-                  <div className="col-span-12">
-                    <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden border border-[var(--borderSoft)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--gray-50)]">
-                      <Image
-                        src="/slides/pexels-picasjoe-11348120.png"
-                        alt="Protection planning"
-                        fill
-                        sizes="(min-width: 1024px) 560px, 100vw"
-                        className="object-cover"
-                        priority
-                      />
-                      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(var(--blue-700-rgb),0.12),rgba(var(--green-700-rgb),0.10))]" />
-                    </div>
-                  </div>
-
-                  <div className="col-span-7">
-                    <div className="relative aspect-[16/11] rounded-2xl overflow-hidden border border-[var(--borderSoft)] bg-[var(--gray-50)]">
-                      <Image
-                        src="/slides/pexels-towfiqu-barbhuiya-3440682-10972831.png"
-                        alt="Policy details"
-                        fill
-                        sizes="(min-width: 1024px) 340px, 60vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-span-5">
-                    <div className="relative aspect-[11/12] rounded-2xl overflow-hidden border border-[var(--borderSoft)] bg-[var(--gray-50)]">
-                      <Image
-                        src="/slides/pexels-maitree-rimthong-444156-1602726.png"
-                        alt="Travel and mobility"
-                        fill
-                        sizes="(min-width: 1024px) 220px, 40vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
+                <div className="relative aspect-[4/3] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-[rgb(var(--navy-950-rgb)/0.28)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] bg-[var(--surface)]">
+                  <Image
+                    src="/slides/pexels-picasjoe-11348120.png"
+                    alt="Protection planning"
+                    fill
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    className="object-cover"
+                    priority
+                  />
                 </div>
 
-                <div className="absolute -bottom-8 -left-6 md:-left-10 bg-[var(--surface)] p-5 md:p-6 rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] border border-[var(--borderSoft)] max-w-[360px]">
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0 bg-[var(--surface)] p-5 md:p-6 rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] border border-[var(--borderSoft)] max-w-[360px] w-[calc(100%-2rem)] md:w-auto">
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-xl bg-[var(--green-50)] flex items-center justify-center">
                       <span className="material-symbols-outlined text-[var(--green-700)]">

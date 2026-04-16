@@ -187,12 +187,12 @@ export default function Navbar() {
 
         {/* ─── CTA Buttons ─── */}
         <div className="hidden lg:flex items-center gap-3 shrink-0">
-          <button className="font-headline text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--blue-700)] px-4 py-2 transition-colors tracking-tight">
-            Login
-          </button>
-          <button className="btn-primary px-5 py-2.5 rounded-xl font-headline text-sm font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform">
-            Get Started
-          </button>
+          <Link
+            href="/contact"
+            className="btn-primary px-5 py-2.5 rounded-xl font-headline text-sm font-bold tracking-tight text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform"
+          >
+            Enquiry Now
+          </Link>
         </div>
 
         {/* ─── Mobile Hamburger ─── */}
@@ -289,12 +289,16 @@ export default function Navbar() {
             })}
           </div>
           <div className="flex gap-3 pt-5">
-            <button className="flex-1 py-3 border border-[var(--border)] rounded-xl text-[var(--text-secondary)] text-sm font-bold font-headline">
-              Login
-            </button>
-            <button className="flex-1 py-3 bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] text-[var(--text-white)] rounded-xl text-sm font-bold font-headline">
-              Get Started
-            </button>
+            <Link
+              href="/contact"
+              className="flex-1 py-3 bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] text-[var(--text-white)] rounded-xl text-sm font-bold font-headline text-center"
+              onClick={() => {
+                setMobileOpen(false);
+                setMobileDropdownOpen(null);
+              }}
+            >
+              Enquiry Now
+            </Link>
           </div>
         </div>
       )}
