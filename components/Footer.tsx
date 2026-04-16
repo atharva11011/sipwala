@@ -1,18 +1,97 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { X, Globe, Mail, MessageCircle, ChevronUp } from "lucide-react";
+import { X, ChevronUp } from "lucide-react";
 import { slideInLeft, staggerContainer } from "@/lib/animations";
+
+type SocialIconProps = { size?: number };
+
+function InstagramIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="4" y="4" width="16" height="16" rx="4" />
+      <circle cx="12" cy="12" r="3.5" />
+      <circle cx="17" cy="7" r="1" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H8v3h2v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1Z" />
+    </svg>
+  );
+}
+
+function YouTubeIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="7" width="18" height="10" rx="2" />
+      <path d="M11 10l4 2-4 2v-4z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function LinkedInIcon({ size = 18 }: SocialIconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="4" y="4" width="16" height="16" rx="3" />
+      <circle cx="8" cy="9" r="1" />
+      <path d="M8 11v6" />
+      <path d="M12 11v6" />
+      <path d="M12 13c0-1.1.9-2 2-2s2 .9 2 2v4" />
+    </svg>
+  );
+}
 
 const siteMapLinks = [
   { label: "Home", href: "/" },
-  { label: "My Story", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "My Story", href: "/company-profile" },
+  { label: "Services", href: "/#services-scroller" },
   { label: "Success Stories", href: "/#success-stories" },
   { label: "SIP Calculator", href: "/calculator" },
-  { label: "Free Resources", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -42,14 +121,6 @@ const fadeUpDelay = (delay: number) => ({
 });
 
 export default function Footer() {
-  const pathname = usePathname();
-
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    if (href.startsWith("/#")) return pathname === "/";
-    return pathname === href;
-  };
-
   return (
     <motion.footer
       initial={{ opacity: 0, y: 30 }}
@@ -136,11 +207,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className={`text-[14px] transition-colors ${
-                        isActive(l.href)
-                          ? "text-[rgb(var(--text-white-rgb)/0.95)] font-medium"
-                          : "text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--blue-200)]"
-                      }`}
+                      className="text-[14px] font-normal text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--blue-200)] transition-colors"
                     >
                       {l.label}
                     </Link>
@@ -162,7 +229,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="text-[14px] text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--blue-200)] transition-colors"
+                      className="text-[14px] font-normal text-[rgb(var(--text-white-rgb)/0.70)] hover:text-[var(--blue-200)] transition-colors"
                     >
                       {l.label}
                     </Link>
@@ -178,14 +245,33 @@ export default function Footer() {
             >
               <div className="mt-2 flex items-center justify-center lg:justify-start gap-2.5">
                 {[
-                  { label: "X", href: "#", icon: X },
-                  { label: "Website", href: "#", icon: Globe },
-                  { label: "Email", href: "#", icon: Mail },
-                  { label: "Message", href: "#", icon: MessageCircle },
+                  {
+                    label: "Instagram",
+                    href: "https://www.instagram.com/santosh.behare/",
+                    icon: InstagramIcon,
+                  },
+                  {
+                    label: "Facebook",
+                    href: "https://www.facebook.com/santosh.behare",
+                    icon: FacebookIcon,
+                  },
+                  { label: "X", href: "https://x.com/", icon: X },
+                  {
+                    label: "YouTube",
+                    href: "https://www.youtube.com/@santoshbehare104",
+                    icon: YouTubeIcon,
+                  },
+                  {
+                    label: "LinkedIn",
+                    href: "https://www.linkedin.com/in/santosh-behare-cfp%E1%B6%9C%E1%B5%90-b6704a71/",
+                    icon: LinkedInIcon,
+                  },
                 ].map((s) => (
                   <motion.a
                     key={s.label}
                     href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-10 h-10 rounded-lg border border-[rgb(var(--text-white-rgb)/0.15)] bg-transparent flex items-center justify-center text-[rgb(var(--text-white-rgb)/0.82)] transition-all hover:text-[var(--blue-200)] hover:border-[rgb(var(--blue-200-rgb)/0.35)] hover:bg-[rgb(var(--blue-200-rgb)/0.10)]"

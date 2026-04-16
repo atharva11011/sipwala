@@ -57,7 +57,7 @@ const services = [
     title: "Stock Broking",
     tagline: "Invest in India's best companies",
     desc: "We provide the suitable content about a particular stock to the investor so that he can take correct decision either to enter in a stock ..",
-    href: "/contact",
+    href: "/products/stock-broking",
     tag: "High Growth",
     accent: "blue",
     popular: false,

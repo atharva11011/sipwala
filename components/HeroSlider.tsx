@@ -12,24 +12,28 @@ const slides = [
     title: 'Grow Your Wealth',
     subtitle: 'Expert-curated funds for every risk profile.',
     img: '/slides/pexels-ambam-29063346.png',
+    href: '/mutual-funds',
   },
   {
     label: 'Life Insurance',
     title: 'Life Insurance',
     subtitle: 'Life Is Very Unpredictable. We Have Plans For Every Situation.',
     img: '/slides/pexels-kindelmedia-6774947.png',
+    href: '/products/life-insurance',
   },
   {
     label: 'SIP Planning',
     title: 'Start Your SIP Today',
     subtitle: 'Small steps, big corpus. Start with just ₹500/month.',
     img: '/slides/pexels-maitree-rimthong-444156-1602726.png',
+    href: '/calculator',
   },
   {
     label: 'Tax Savings',
     title: 'Save Tax with ELSS',
     subtitle: 'Save up to ₹46,800 every year under Section 80C.',
     img: '/slides/pexels-towfiqu-barbhuiya-3440682-10972831.png',
+    href: '/mutual-funds',
   },
 ] as const;
 
@@ -123,7 +127,7 @@ export default function HeroSlider() {
 
               <motion.div variants={fadeUp} className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link
-                  href="/mutual-funds"
+                  href={slides[currentSlide].href}
                   className="btn-primary w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-headline font-bold tracking-tight text-[15px] sm:text-[16px] text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))]"
                 >
                   Read More

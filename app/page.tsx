@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import HeroSlider from "@/components/HeroSlider";
 import StatsStrip from "@/components/StatsStrip";
 import type { StatItem } from "@/components/StatsStrip";
-import ServicesSection from "@/components/ServicesSection";
+import ServicesScroller from "@/components/ServicesScroller";
 import BlogSection from "@/components/BlogSection";
 import GoalPlannerSection from "@/components/GoalPlannerSection";
 import Testimonials from "@/components/Testimonials";
@@ -48,7 +48,7 @@ export default function HomePage() {
 
       <StatsStrip stats={stats} />
 
-      <ServicesSection />
+      <ServicesScroller />
 
       <GoalPlannerSection />
 
