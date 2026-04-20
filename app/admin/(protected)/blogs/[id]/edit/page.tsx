@@ -75,13 +75,23 @@ export default async function AdminEditBlogPage({ params, searchParams }: PagePr
           </p>
         </div>
 
-        <Link
-          href="/admin/blogs"
-          className="inline-flex items-center gap-2 text-[14px] font-bold text-[var(--blue-700)] hover:gap-3 transition-all"
-        >
-          <span className="material-symbols-outlined text-sm">arrow_back</span>
-          Back
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/admin/blogs/${params.id}/view`}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors"
+          >
+            Preview
+            <span className="material-symbols-outlined text-[16px]">visibility</span>
+          </Link>
+
+          <Link
+            href="/admin/blogs"
+            className="inline-flex items-center gap-2 text-[14px] font-bold text-[var(--blue-700)] hover:gap-3 transition-all"
+          >
+            <span className="material-symbols-outlined text-sm">arrow_back</span>
+            Back
+          </Link>
+        </div>
       </div>
 
       {error ? (

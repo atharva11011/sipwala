@@ -85,14 +85,11 @@ export default async function AdminHomePage() {
                     </Link>
 
                     <Link
-                      href={`/blog/${blog.slug}`}
+                      href={`/admin/blogs/${blog.id}/view`}
                       className="inline-flex items-center gap-1 text-[13px] font-bold text-[var(--blue-700)] hover:underline"
-                      target="_blank"
                     >
                       View
-                      <span className="material-symbols-outlined text-[16px]">
-                        open_in_new
-                      </span>
+                      <span className="material-symbols-outlined text-[16px]">visibility</span>
                     </Link>
                   </div>
                 </div>
