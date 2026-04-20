@@ -135,6 +135,11 @@ export async function getBlogBySlug(slug: string): Promise<BlogPost | null> {
   return posts.find((p) => p.slug === slug) ?? null;
 }
 
+export async function getBlogById(id: string): Promise<BlogPost | null> {
+  const posts = await getAllBlogs();
+  return posts.find((p) => p.id === id) ?? null;
+}
+
 export async function createBlog(input: CreateBlogInput): Promise<BlogPost> {
   const title = input.title.trim();
   const excerpt = input.excerpt.trim();
@@ -171,6 +176,54 @@ export async function createBlog(input: CreateBlogInput): Promise<BlogPost> {
 
   await writeBlogs([post, ...posts]);
   return post;
+}
+
+export async function updateBlogById(
+  id: string,
+  input: CreateBlogInput,
+): Promise<BlogPost> {
+  const title = input.title.trim();
+  const excerpt = input.excerpt.trim();
+  const content = input.content.trim();
+  const tag = input.tag.trim();
+
+  if (!title || !excerpt || !content || !tag) {
+    throw new Error("Missing required fields");
+  }
+
+  const posts = await getAllBlogs();
+  const index = posts.findIndex((p) => p.id === id);
+  if (index === -1) throw new Error("Blog not found");
+
+  const existing = posts[index]!;
+
+  const nextSlug = (
+    input.slug?.trim()
+      ? slugify(input.slug)
+      : slugify(existing.slug || title)
+  ).trim();
+  if (!nextSlug) throw new Error("Invalid slug");
+  if (posts.some((p) => p.slug === nextSlug && p.id !== id)) {
+    throw new Error("Slug already exists");
+  }
+
+  const publishedAt = input.publishedAt?.trim() || existing.publishedAt;
+
+  const next: BlogPost = {
+    ...existing,
+    slug: nextSlug,
+    title,
+    excerpt,
+    content,
+    tag,
+    featured: Boolean(input.featured),
+    publishedAt,
+  };
+
+  const updated = [...posts];
+  updated[index] = next;
+  await writeBlogs(updated);
+  return next;
 }
 
 export async function deleteBlogById(id: string): Promise<void> {

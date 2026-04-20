@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import AppShell from "@/components/AppShell";
 import { tokensToCssVars } from "@/lib/tokens";
 
 const inter = Inter({
@@ -40,9 +39,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-body antialiased">
-        <Navbar />
-        {children}
-        <Footer />
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

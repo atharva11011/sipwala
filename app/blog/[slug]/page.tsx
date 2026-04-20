@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMark from "@/lib/remarkMark";
 import {
   formatDisplayDate,
   formatReadTime,
@@ -63,7 +64,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
           <div className="mt-10 border-t border-[var(--borderSoft)] pt-10">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkMark]}
               components={{
                 h2: ({ children }) => (
                   <h2 className="mt-8 mb-3 font-headline text-[22px] sm:text-[24px] font-extrabold tracking-tight text-[var(--text-primary)]">
@@ -100,6 +101,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
                   >
                     {children}
                   </a>
+                ),
+                mark: ({ children }) => (
+                  <mark className="rounded px-1 bg-[rgb(var(--gold-base-rgb)/0.18)] text-[var(--text-secondary)]">
+                    {children}
+                  </mark>
                 ),
               }}
             >

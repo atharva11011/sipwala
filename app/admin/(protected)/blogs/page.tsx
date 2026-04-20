@@ -77,16 +77,28 @@ export default async function AdminBlogsPage() {
                 </div>
 
                 <div className="col-span-12 sm:col-span-1 mt-3 sm:mt-0 flex sm:justify-end">
-                  <Link
-                    href={`/blog/${blog.slug}`}
-                    className="inline-flex items-center gap-1 text-[13px] font-bold text-[var(--blue-700)] hover:underline"
-                    target="_blank"
-                  >
-                    View
-                    <span className="material-symbols-outlined text-[16px]">
-                      open_in_new
-                    </span>
-                  </Link>
+                  <div className="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-1">
+                    <Link
+                      href={`/admin/blogs/${blog.id}/edit`}
+                      className="inline-flex items-center gap-1 text-[13px] font-bold text-[var(--blue-700)] hover:underline"
+                    >
+                      Edit
+                      <span className="material-symbols-outlined text-[16px]">
+                        edit
+                      </span>
+                    </Link>
+
+                    <Link
+                      href={`/blog/${blog.slug}`}
+                      className="inline-flex items-center gap-1 text-[13px] font-bold text-[var(--blue-700)] hover:underline"
+                      target="_blank"
+                    >
+                      View
+                      <span className="material-symbols-outlined text-[16px]">
+                        open_in_new
+                      </span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

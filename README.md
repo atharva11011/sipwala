@@ -40,6 +40,25 @@ npm run build
 npm start
 ```
 
+## Admin Panel
+
+**Routes**
+
+- Login: `/admin/login`
+- Dashboard (protected): `/admin`
+
+**Environment variables (required in production / Vercel)**
+
+- `ADMIN_PASSWORD`
+- `ADMIN_SESSION_SECRET`
+- Optional: `ADMIN_USERNAME` (default: `admin`)
+
+On Vercel: Project → Settings → Environment Variables → add the values → redeploy.
+
+**Important (Vercel storage note)**
+
+The blog admin currently uses a local JSON file (`data/blogs.json`) via Node `fs`. This works locally, but Vercel deployments have an immutable filesystem, so create/edit/delete will fail unless you switch to a database/KV storage.
+
 ## Project Structure
 
 ```

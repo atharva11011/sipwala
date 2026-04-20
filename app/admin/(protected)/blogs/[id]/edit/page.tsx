@@ -1,21 +1,31 @@
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
-import { requireAdmin } from "@/lib/adminAuth";
-import { createBlog } from "@/lib/blogStore";
 import MarkdownEditor from "@/components/admin/MarkdownEditor";
+import { requireAdmin } from "@/lib/adminAuth";
+import { getBlogById, slugify, updateBlogById } from "@/lib/blogStore";
 
 type PageProps = {
+  params: { id: string };
   searchParams?: { error?: string };
 };
 
 export const dynamic = "force-dynamic";
 
-export default function AdminNewBlogPage({ searchParams }: PageProps) {
+function toInputDate(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toISOString().slice(0, 10);
+}
+
+export default async function AdminEditBlogPage({ params, searchParams }: PageProps) {
+  const blog = await getBlogById(params.id);
+  if (!blog) notFound();
+
   const error = searchParams?.error ? decodeURIComponent(searchParams.error) : "";
 
-  const createAction = async (formData: FormData) => {
+  const updateAction = async (formData: FormData) => {
     "use server";
 
     requireAdmin();
@@ -28,12 +38,10 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
     const featured = Boolean(formData.get("featured"));
 
     const publishedAtRaw = String(formData.get("publishedAt") ?? "").trim();
-    const publishedAt = publishedAtRaw
-      ? new Date(publishedAtRaw).toISOString()
-      : undefined;
+    const publishedAt = publishedAtRaw ? new Date(publishedAtRaw).toISOString() : undefined;
 
     try {
-      const post = await createBlog({
+      const updated = await updateBlogById(params.id, {
         title,
         slug: slug || undefined,
         tag,
@@ -45,10 +53,11 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
 
       revalidatePath("/");
       revalidatePath("/blog");
-      revalidatePath(`/blog/${post.slug}`);
+      revalidatePath(`/blog/${slugify(blog.slug)}`);
+      revalidatePath(`/blog/${slugify(updated.slug)}`);
     } catch (e) {
-      const message = e instanceof Error ? e.message : "Failed to create blog";
-      redirect(`/admin/blogs/new?error=${encodeURIComponent(message)}`);
+      const message = e instanceof Error ? e.message : "Failed to update blog";
+      redirect(`/admin/blogs/${params.id}/edit?error=${encodeURIComponent(message)}`);
     }
 
     redirect("/admin/blogs");
@@ -59,10 +68,10 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="font-headline text-[22px] sm:text-[26px] font-extrabold tracking-tight text-[var(--text-primary)]">
-            New Blog
+            Edit Blog
           </h1>
           <p className="mt-2 text-[14px] leading-[1.75] text-[var(--text-muted)]">
-            Publish a new post (content supports Markdown).
+            Update your post (content supports Markdown).
           </p>
         </div>
 
@@ -81,7 +90,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
         </div>
       ) : null}
 
-      <form action={createAction} className="mt-8 space-y-6">
+      <form action={updateAction} className="mt-8 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
@@ -91,19 +100,19 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
               name="title"
               type="text"
               required
-              placeholder="Enter blog title"
+              defaultValue={blog.title}
               className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
             />
           </div>
 
           <div className="space-y-2">
             <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
-              Slug (optional)
+              Slug
             </label>
             <input
               name="slug"
               type="text"
-              placeholder="auto-generated-from-title"
+              defaultValue={blog.slug}
               className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
             />
           </div>
@@ -118,7 +127,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
               name="tag"
               type="text"
               required
-              placeholder="Market Insight"
+              defaultValue={blog.tag}
               className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
             />
           </div>
@@ -130,6 +139,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
             <input
               name="publishedAt"
               type="date"
+              defaultValue={toInputDate(blog.publishedAt)}
               className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] outline-none text-[14px] leading-[1.75]"
             />
           </div>
@@ -139,6 +149,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
           <input
             name="featured"
             type="checkbox"
+            defaultChecked={blog.featured}
             className="w-4 h-4 accent-[var(--blue-700)]"
           />
           <span className="text-[14px] font-medium text-[var(--text-secondary)]">
@@ -154,7 +165,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
             name="excerpt"
             required
             rows={3}
-            placeholder="Short summary shown on cards"
+            defaultValue={blog.excerpt}
             className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] resize-none outline-none text-[14px] leading-[1.75]"
           />
         </div>
@@ -167,6 +178,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
             name="content"
             required
             rows={12}
+            defaultValue={blog.content}
             placeholder="Write your blog in Markdown (headings, lists, links, etc.)"
           />
         </div>
@@ -175,7 +187,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
           type="submit"
           className="btn-primary w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl font-headline font-bold tracking-tight text-[15px] text-[var(--text-white)] bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform"
         >
-          Publish Blog
+          Save Changes
         </button>
       </form>
     </div>
