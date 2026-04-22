@@ -18,7 +18,7 @@ export default function AppShell({ children }: Props) {
   const isLogoutRoute = pathname === "/admin/logout";
 
   if (isAdmin) {
-    // Don't show navbar on login/logout pages
+    // Don't show navbar on login/logout pages  
     const showAdminNavbar = !isLoginPage && !isLogoutRoute;
 
     return (
