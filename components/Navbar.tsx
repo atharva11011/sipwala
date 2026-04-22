@@ -71,7 +71,10 @@ const NAV_LINKS: NavLink[] = [
     dropdownLayout: "grid",
   },
   { href: "/calculator", label: "CALCULATORS" },
+  { href: "/blog", label: "BLOGS" },
   { href: "/contact", label: "CONTACT US" },
+  
+  
 ];
 
 export default function Navbar() {

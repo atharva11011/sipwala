@@ -14,13 +14,18 @@ type Props = {
 export default function AppShell({ children }: Props) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
+  const isLoginPage = pathname === "/admin/login";
+  const isLogoutRoute = pathname === "/admin/logout";
 
   if (isAdmin) {
+    // Don't show navbar on login/logout pages
+    const showAdminNavbar = !isLoginPage && !isLogoutRoute;
+
     return (
       <>
-        <AdminNavbar />
+        {showAdminNavbar && <AdminNavbar />}
         {children}
-        <AdminFooter />
+        {showAdminNavbar && <AdminFooter />}
       </>
     );
   }
