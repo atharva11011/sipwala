@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import ConfirmDeleteButton from "@/components/admin/ConfirmDeleteButton";
+import { deleteBlogPostAction } from "@/lib/adminBlogActions";
 import {
   formatDisplayDate,
   getAllBlogs,
@@ -95,6 +97,13 @@ export default async function AdminBlogsPage() {
                       View
                       <span className="material-symbols-outlined text-[16px]">visibility</span>
                     </Link>
+
+                    <ConfirmDeleteButton
+                      id={blog.id}
+                      redirectTo="/admin/blogs"
+                      action={deleteBlogPostAction}
+                      className="inline-flex items-center gap-1 text-[13px] font-bold text-[rgb(var(--red-700-rgb)/0.95)] hover:underline disabled:opacity-50"
+                    />
                   </div>
                 </div>
               </div>

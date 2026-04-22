@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { scaleIn, staggerContainer } from '@/lib/animations';
 
-type DotAccent = 'blue' | 'green' | 'gold';
+type DotAccent = 'blue' | 'green' | 'gold' | 'red';
 
 export type StatItem = {
   value: string;
@@ -14,6 +14,7 @@ export type StatItem = {
 function dotClass(dot: DotAccent) {
   if (dot === 'green') return 'bg-[var(--green-500)]';
   if (dot === 'gold') return 'bg-[var(--gold-base)]';
+  if (dot === 'red') return 'bg-[var(--red-500)]';
   return 'bg-[var(--blue-600)]';
 }
 

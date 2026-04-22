@@ -60,7 +60,7 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="tel"
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 "
                     className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
                   />
                 </div>

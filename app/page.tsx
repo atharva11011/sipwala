@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 };
 
 const stats = [
-  { value: "50,000+", label: "Active Investors", dot: "blue" },
-  { value: "₹500 Cr+", label: "Assets Under Management", dot: "green" },
-  { value: "1,000+", label: "Fund Options", dot: "blue" },
-  { value: "4.9 ★", label: "App Rating", dot: "gold" },
+  { value: "44 CR +", label: "ASSETS UNDER MANAGEMENT", dot: "blue" },
+  { value: "550 +", label: "HAPPY FAMILY", dot: "green" },
+  { value: "800 +", label: "HAPPY CLIENTS", dot: "blue" },
+  { value: "14 +", label: "CUMULATIVE EXPERIENCE", dot: "gold" },
 ] satisfies readonly StatItem[];
 
 const whyFeatures = [

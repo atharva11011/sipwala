@@ -13,6 +13,7 @@ export type BlogPost = {
   tag: string;
   featured: boolean;
   publishedAt: string; // ISO date string
+  updatedAt?: string; // ISO date string
 };
 
 export type CreateBlogInput = {
@@ -172,6 +173,7 @@ export async function createBlog(input: CreateBlogInput): Promise<BlogPost> {
     tag,
     featured: Boolean(input.featured),
     publishedAt,
+    updatedAt: now.toISOString(),
   };
 
   await writeBlogs([post, ...posts]);
@@ -208,6 +210,7 @@ export async function updateBlogById(
   }
 
   const publishedAt = input.publishedAt?.trim() || existing.publishedAt;
+  const now = new Date();
 
   const next: BlogPost = {
     ...existing,
@@ -218,6 +221,7 @@ export async function updateBlogById(
     tag,
     featured: Boolean(input.featured),
     publishedAt,
+    updatedAt: now.toISOString(),
   };
 
   const updated = [...posts];

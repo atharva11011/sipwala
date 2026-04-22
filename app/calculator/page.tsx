@@ -160,93 +160,98 @@ export default function CalculatorPage() {
                 id="calculator-hero-title"
                 className="font-headline text-[44px] md:text-[72px] font-black tracking-tight text-[var(--text-primary)] mb-6 leading-[1.05]"
               >
-              Wealth Creation,{" "}
-                <span className="text-[var(--green-700)] italic">Simplified.</span>
+                Wealth Creation,{" "}
+                <span className="text-[var(--green-700)] italic">
+                  Simplified.
+                </span>
               </h1>
               <p className="text-[16px] leading-[1.8] text-[var(--text-secondary)] max-w-xl">
-              Estimate how your small monthly investments can grow into a
-              substantial corpus over time using our professional SIP
-              forecasting tool.
-            </p>
-          </div>
-          <div className="lg:col-span-5 flex lg:justify-end items-start pt-4">
+                Estimate how your small monthly investments can grow into a
+                substantial corpus over time using our professional SIP
+                forecasting tool.
+              </p>
+            </div>
+
+            <div className="lg:col-span-5 flex lg:justify-end items-start pt-4">
               <div className="animate-float bg-[var(--gold-light)] p-4 rounded-xl flex items-center gap-4 border border-[rgb(var(--gold-base-rgb)/0.28)] w-full max-w-xs">
                 <div className="bg-[var(--surface)] p-3 rounded-full border border-[var(--borderSoft)] shrink-0">
                   <span className="material-symbols-outlined text-[var(--gold-dark)] text-2xl">
-                  savings
-                </span>
-              </div>
-              <div>
+                    savings
+                  </span>
+                </div>
+                <div>
                   <span className="block font-headline font-bold text-[var(--text-primary)] text-[14px] leading-[1.75]">
-                  Tax Saving Alert
-                </span>
+                    Tax Saving Alert
+                  </span>
                   <span className="text-[12px] leading-[1.75] text-[var(--text-secondary)]">
-                  Save up to ₹46,800 via ELSS funds.
-                </span>
+                    Save up to ₹46,800 via ELSS funds.
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* ─── Calculator Bento ────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Sliders Panel */}
-          <div className="lg:col-span-7 bg-[var(--surface)] rounded-3xl p-6 md:p-8 border border-[var(--borderSoft)]">
-            <h2 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)] mb-10 flex items-center gap-2">
-              <span className="material-symbols-outlined text-[var(--blue-700)]">tune</span>
-              Adjust Your Parameters
-            </h2>
-            <div className="space-y-12">
-              <Slider
-                label="Monthly Investment"
-                value={monthly}
-                min={500}
-                max={100000}
-                step={500}
-                format={(v) => `₹ ${v.toLocaleString("en-IN")}`}
-                onChange={setMonthly}
-              />
-              <Slider
-                label="Expected Return Rate (p.a.)"
-                value={rate}
-                min={1}
-                max={30}
-                step={0.5}
-                format={(v) => `${v} %`}
-                onChange={setRate}
-              />
-              <Slider
-                label="Time Period"
-                value={years}
-                min={1}
-                max={40}
-                step={1}
-                format={(v) => `${v} Yr${v !== 1 ? "s" : ""}`}
-                onChange={setYears}
-              />
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Sliders Panel */}
+            <div className="lg:col-span-7 bg-[var(--surface)] rounded-3xl p-6 md:p-8 border border-[var(--borderSoft)]">
+              <h2 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)] mb-10 flex items-center gap-2">
+                <span className="material-symbols-outlined text-[var(--blue-700)]">tune</span>
+                Adjust Your Parameters
+              </h2>
+              <div className="space-y-12">
+                <Slider
+                  label="Monthly Investment"
+                  value={monthly}
+                  min={500}
+                  max={100000}
+                  step={500}
+                  format={(v) => `₹ ${v.toLocaleString("en-IN")}`}
+                  onChange={setMonthly}
+                />
+                <Slider
+                  label="Expected Return Rate (p.a.)"
+                  value={rate}
+                  min={1}
+                  max={30}
+                  step={0.5}
+                  format={(v) => `${v} %`}
+                  onChange={setRate}
+                />
+                <Slider
+                  label="Time Period"
+                  value={years}
+                  min={1}
+                  max={40}
+                  step={1}
+                  format={(v) => `${v} Yr${v !== 1 ? "s" : ""}`}
+                  onChange={setYears}
+                />
+              </div>
+
+              {/* Tips */}
+              <div className="mt-10 p-4 bg-[var(--gray-50)] rounded-xl flex items-start gap-3 border border-[var(--borderSoft)]">
+                <span className="material-symbols-outlined text-[var(--green-700)] shrink-0">
+                  lightbulb
+                </span>
+                <p className="text-[12px] leading-[1.75] text-[var(--text-secondary)]">
+                  <strong className="text-[var(--text-primary)]">Pro Tip:</strong>{" "}
+                  Increasing your SIP by just ₹1,000/month can significantly boost
+                  your long-term corpus. Start early for maximum compounding
+                  benefit.
+                </p>
+              </div>
             </div>
 
-            {/* Tips */}
-            <div className="mt-10 p-4 bg-[var(--gray-50)] rounded-xl flex items-start gap-3 border border-[var(--borderSoft)]">
-              <span className="material-symbols-outlined text-[var(--green-700)] shrink-0">
-                lightbulb
-              </span>
-              <p className="text-[12px] leading-[1.75] text-[var(--text-secondary)]">
-                <strong className="text-[var(--text-primary)]">Pro Tip:</strong>{" "}
-                Increasing your SIP by just ₹1,000/month can significantly boost
-                your long-term corpus. Start early for maximum compounding
-                benefit.
-              </p>
-            </div>
-          </div>
-
-          {/* Results Panel */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[var(--surface)] rounded-3xl p-6 md:p-8 border border-[var(--borderSoft)] shadow-[0px_20px_40px_rgba(15,23,42,0.06)] relative overflow-hidden">
-              <div className="relative z-10">
-                <h3 className="font-headline font-bold text-[var(--text-primary)] mb-8 text-center text-[16px] leading-[1.8]">
-                  Investment Breakdown
-                </h3>
+            {/* Results Panel */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="bg-[var(--surface)] rounded-3xl p-6 md:p-8 border border-[var(--borderSoft)] shadow-[0px_20px_40px_rgba(15,23,42,0.06)] relative overflow-hidden">
+                <div className="relative z-10">
+                  <h3 className="font-headline font-bold text-[var(--text-primary)] mb-8 text-center text-[16px] leading-[1.8]">
+                    Investment Breakdown
+                  </h3>
 
                 {/* Donut Chart */}
                 <div className="flex justify-center mb-10">
@@ -302,24 +307,24 @@ export default function CalculatorPage() {
               <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-[rgb(var(--blue-700-rgb)/0.06)] rounded-full blur-3xl" />
             </div>
 
-            {/* Disclaimer */}
-            <div className="bg-[var(--gray-50)] rounded-2xl p-5 flex items-start gap-3 border border-[var(--borderSoft)]">
-              <span className="material-symbols-outlined text-[var(--blue-700)] shrink-0">
-                verified
-              </span>
-              <div>
-                <h4 className="font-headline font-bold text-[var(--text-primary)] text-[14px] leading-[1.75]">
-                  Professional Projection
-                </h4>
-                <p className="text-[12px] leading-[1.75] text-[var(--text-secondary)] mt-1">
-                  Calculations based on monthly compounding. Mutual fund
-                  investments are subject to market risks. Read all scheme
-                  related documents carefully.
-                </p>
+              {/* Disclaimer */}
+              <div className="bg-[var(--gray-50)] rounded-2xl p-5 flex items-start gap-3 border border-[var(--borderSoft)]">
+                <span className="material-symbols-outlined text-[var(--blue-700)] shrink-0">
+                  verified
+                </span>
+                <div>
+                  <h4 className="font-headline font-bold text-[var(--text-primary)] text-[14px] leading-[1.75]">
+                    Professional Projection
+                  </h4>
+                  <p className="text-[12px] leading-[1.75] text-[var(--text-secondary)] mt-1">
+                    Calculations based on monthly compounding. Mutual fund
+                    investments are subject to market risks. Read all scheme
+                    related documents carefully.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
     </>
