@@ -62,19 +62,20 @@ export default async function AssociatedWithSection() {
           Associated With
         </h2>
 
-        <div className="mx-auto mt-12 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+        <div className="mx-auto mt-12 grid max-w-lg grid-cols-3 items-center gap-x-6 gap-y-12 sm:max-w-xl sm:grid-cols-4 sm:gap-x-8 md:grid-cols-5 lg:mx-0 lg:max-w-none lg:grid-cols-6 lg:gap-x-10 lg:gap-y-14">
           {logos.map((logo) => (
             <div
               key={logo.alt}
-              className="col-span-2 max-h-12 w-full flex items-center justify-center lg:col-span-1"
+              className="flex min-h-32 w-full items-center justify-center rounded-md bg-white/40 transition-transform duration-300 hover:bg-white/60 hover:scale-105 py-6"
             >
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={158}
-                height={48}
-                className="max-h-12 w-full object-contain"
-                sizes="(min-width: 1024px) 158px, (min-width: 640px) 20vw, 40vw"
+                width={180}
+                height={100}
+                className="max-h-28 w-auto object-contain px-4"
+                sizes="(min-width: 1024px) 180px, (min-width: 768px) 160px, (min-width: 640px) 140px, 120px"
+                priority={false}
               />
             </div>
           ))}
