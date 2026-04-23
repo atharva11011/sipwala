@@ -68,30 +68,8 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="bg-[var(--surface)] py-16 md:py-24 relative overflow-hidden">
+    <section className="bg-[var(--surface)] py-16 md:py-24">
       <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
-        {/* Decorative arc */}
-        <svg
-          className="absolute top-10 right-6 w-[240px] h-[120px] pointer-events-none opacity-60 hidden sm:block"
-          viewBox="0 0 240 120"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M12 108C52 38 140 14 228 24"
-            stroke="currentColor"
-            strokeWidth="3"
-            strokeLinecap="round"
-            className="text-outline-variant"
-          />
-          <path
-            d="M44 114C82 60 154 40 228 48"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            className="text-outline-variant"
-          />
-        </svg>
 
         {/* Top heading block */}
         <motion.div

@@ -69,13 +69,7 @@ export default async function BlogSection() {
                     {blog.tag}
                   </div>
 
-                  {/* Decorative circles */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute -top-10 -right-14 w-40 h-40 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                    <div className="absolute top-10 -right-8 w-28 h-28 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                    <div className="absolute -bottom-14 left-10 w-44 h-44 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                    <div className="absolute -bottom-10 -left-10 w-28 h-28 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                  </div>
+
 
                   <div className="absolute bottom-4 left-6 leading-none">
                     <div className="text-5xl font-extrabold tracking-tighter text-[var(--blue-700)]">
