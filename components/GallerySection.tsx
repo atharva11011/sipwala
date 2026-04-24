@@ -105,45 +105,75 @@ export default function GallerySection({ images }: Props) {
       {/* Lightbox Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0/0.8)] p-4 animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0/0.92)] p-4 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
           <div
-            className="relative max-w-4xl w-full max-h-[90vh]"
+            className="relative w-full max-w-5xl max-h-[95vh] flex flex-col rounded-3xl overflow-hidden bg-[var(--surface)]"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute -top-12 right-0 text-[var(--text-white)] hover:text-[var(--gray-200)] text-[32px] font-light"
+              className="absolute top-4 right-4 z-10 w-12 h-12 flex items-center justify-center rounded-full bg-[var(--text-primary)] bg-opacity-20 hover:bg-opacity-30 text-[var(--text-white)] text-[28px] transition-all duration-200 group"
               aria-label="Close modal"
             >
-              ×
+              <span className="material-symbols-outlined group-hover:scale-110 transition-transform">close</span>
             </button>
 
-            <div className="relative w-full h-[60vh] rounded-2xl overflow-hidden">
+            {/* Image Container */}
+            <div className="relative w-full h-[50vh] md:h-[65vh] bg-[var(--gray-100)] flex-shrink-0">
               <Image
                 src={selectedImage.imageUrl}
                 alt={selectedImage.title}
                 fill
-                className="object-cover"
+                className="object-contain"
                 sizes="90vw"
+                priority
               />
             </div>
 
-            <div className="bg-[var(--surface)] border-x border-b border-[var(--borderSoft)] rounded-b-2xl p-6 md:p-8">
-              <h3 className="font-headline text-[24px] font-bold text-[var(--text-primary)] mb-3">
+            {/* Content Section */}
+            <div className="flex-1 p-6 md:p-10 overflow-y-auto">
+              {selectedImage.featured && (
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--green-50)] text-[var(--green-700)] text-[11px] font-bold uppercase tracking-widest mb-4">
+                  <span className="material-symbols-outlined text-sm">star</span>
+                  Featured Image
+                </div>
+              )}
+              
+              <h3 className="font-headline text-[28px] md:text-[36px] font-bold text-[var(--text-primary)] mb-4 leading-[1.2]">
                 {selectedImage.title}
               </h3>
-              <p className="text-[16px] leading-[1.8] text-[var(--text-secondary)] mb-4">
+              
+              <p className="text-[15px] md:text-[16px] leading-[1.8] text-[var(--text-secondary)] mb-6">
                 {selectedImage.description}
               </p>
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] uppercase font-bold tracking-wide text-[var(--blue-700)]">
-                  {selectedImage.category}
-                </span>
-                <span className="text-[12px] text-[var(--gray-400)]">
-                  {new Date(selectedImage.uploadedAt).toLocaleDateString()}
-                </span>
+              
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6 border-t border-[var(--borderSoft)]">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <span className="text-[11px] uppercase font-bold tracking-widest text-[var(--gray-400)]">
+                      Category
+                    </span>
+                    <p className="text-[14px] font-bold text-[var(--blue-700)]">
+                      {selectedImage.category.charAt(0).toUpperCase() + selectedImage.category.slice(1)}
+                    </p>
+                  </div>
+                  <div className="w-px h-12 bg-[var(--borderSoft)]"></div>
+                  <div>
+                    <span className="text-[11px] uppercase font-bold tracking-widest text-[var(--gray-400)]">
+                      Uploaded
+                    </span>
+                    <p className="text-[14px] text-[var(--text-primary)]">
+                      {new Date(selectedImage.uploadedAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

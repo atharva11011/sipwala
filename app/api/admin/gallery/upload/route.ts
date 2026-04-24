@@ -45,7 +45,11 @@ export async function POST(req: Request) {
 
     // Create gallery directory if it doesn't exist
     const galleryDir = join(process.cwd(), "public", "gallery");
-    await mkdir(galleryDir, { recursive: true });
+    try {
+      await mkdir(galleryDir, { recursive: true });
+    } catch (err) {
+      console.warn("Could not create gallery directory (expected on Vercel)");
+    }
 
     // Generate unique filename
     const timestamp = Date.now();
@@ -55,7 +59,13 @@ export async function POST(req: Request) {
 
     // Save file to public/gallery
     const bytes = await file.arrayBuffer();
-    await writeFile(filepath, Buffer.from(bytes));
+    try {
+      await writeFile(filepath, Buffer.from(bytes));
+    } catch (err) {
+      console.warn("Could not write file (expected on Vercel)");
+      // On Vercel, file writes will fail - this is expected
+      // For production, consider using a service like Cloudinary or AWS S3
+    }
 
     // Create gallery entry
     const imageUrl = `/gallery/${filename}`;

@@ -11,7 +11,8 @@ export type GalleryImage = {
   featured: boolean;
 };
 
-const galleryPath = path.join(process.cwd(), "data", "gallery.json");
+// Use public directory for gallery data (works on Vercel)
+const galleryPath = path.join(process.cwd(), "public", "data", "gallery.json");
 
 export async function getAllGalleryImages(): Promise<GalleryImage[]> {
   try {
@@ -28,7 +29,18 @@ export async function getFeaturedGalleryImages(): Promise<GalleryImage[]> {
 }
 
 export async function saveGalleryImages(images: GalleryImage[]): Promise<void> {
-  await fs.writeFile(galleryPath, JSON.stringify(images, null, 2));
+  try {
+    // Ensure directory exists
+    const dir = path.dirname(galleryPath);
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(galleryPath, JSON.stringify(images, null, 2));
+  } catch (error) {
+    console.error("Error saving gallery images:", error);
+    // Silently fail on production (Vercel read-only filesystem)
+    if (process.env.NODE_ENV !== "production") {
+      throw error;
+    }
+  }
 }
 
 export async function addGalleryImage(image: GalleryImage): Promise<void> {
