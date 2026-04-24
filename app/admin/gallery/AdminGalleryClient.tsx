@@ -108,7 +108,9 @@ export default function AdminGalleryClient({ images }: Props) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to delete image");
+        // Show helpful message for Vercel limitation
+        setError(data.error || "Failed to delete image");
+        return;
       }
 
       setSuccess("Image deleted successfully!");

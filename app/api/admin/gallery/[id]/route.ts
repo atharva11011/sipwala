@@ -1,6 +1,4 @@
-import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/adminAuth";
-import { deleteGalleryImageById } from "@/lib/galleryStore";
 
 export async function DELETE(
   req: Request,
@@ -14,17 +12,21 @@ export async function DELETE(
       return Response.json({ error: "Missing ID" }, { status: 400 });
     }
 
-    console.log(`Attempting to delete gallery image: ${id}`);
-    await deleteGalleryImageById(id);
+    // On Vercel: Cannot delete (read-only filesystem)
+    // Solution: Edit public/data/gallery.json manually in GitHub
     
-    try {
-      revalidatePath("/about");
-      revalidatePath("/admin/gallery");
-    } catch (err) {
-      console.warn("Could not revalidate paths:", err);
+    if (process.env.VERCEL === "1") {
+      return Response.json({
+        error: "Vercel is read-only. To delete images: 1) Edit public/data/gallery.json in GitHub, 2) Remove the image entry, 3) Commit & push. The gallery will update automatically.",
+        success: false,
+        instruction: "Edit gallery.json in GitHub → Remove the entry → Commit → Done!"
+      }, { status: 403 });
     }
 
-    console.log(`Successfully deleted gallery image: ${id}`);
+    // Local development: Use filesystem
+    const { deleteGalleryImageById } = await import("@/lib/galleryStore");
+    await deleteGalleryImageById(id);
+
     return Response.json({ success: true, message: "Image deleted successfully" });
   } catch (error) {
     console.error("Delete gallery error:", error);
