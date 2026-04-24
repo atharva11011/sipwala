@@ -12,7 +12,7 @@ export default function GallerySection({ images }: Props) {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [filter, setFilter] = useState<string>("all");
 
-  const categories = ["all", ...new Set(images.map((img) => img.category))];
+  const categories = ["all", ...Array.from(new Set(images.map((img) => img.category)))];
   const filteredImages =
     filter === "all" ? images : images.filter((img) => img.category === filter);
 
