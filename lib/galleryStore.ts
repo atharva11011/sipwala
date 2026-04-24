@@ -36,10 +36,11 @@ export async function saveGalleryImages(images: GalleryImage[]): Promise<void> {
     await fs.writeFile(galleryPath, JSON.stringify(images, null, 2));
   } catch (error) {
     console.error("Error saving gallery images:", error);
-    // Silently fail on production (Vercel read-only filesystem)
-    if (process.env.NODE_ENV !== "production") {
-      throw error;
+    // On Vercel, file writes will fail - provide helpful message
+    if (process.env.VERCEL === "1") {
+      throw new Error("Gallery storage is read-only on this deployment. Use a cloud storage service like Cloudinary or AWS S3.");
     }
+    throw error;
   }
 }
 

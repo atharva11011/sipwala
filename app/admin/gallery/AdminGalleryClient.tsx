@@ -100,17 +100,24 @@ export default function AdminGalleryClient({ images }: Props) {
     if (!confirm("Are you sure you want to delete this image?")) return;
 
     try {
+      setError("");
       const response = await fetch(`/api/admin/gallery/${id}`, {
         method: "DELETE",
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to delete image");
+        throw new Error(data.error || "Failed to delete image");
       }
 
+      setSuccess("Image deleted successfully!");
+      setTimeout(() => setSuccess(""), 3000);
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete image");
+      const errorMsg = err instanceof Error ? err.message : "Failed to delete image";
+      setError(errorMsg);
+      console.error("Delete error:", errorMsg);
     }
   };
 
