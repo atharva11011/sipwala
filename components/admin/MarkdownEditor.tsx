@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 type Props = {
   name: string;
@@ -8,6 +9,10 @@ type Props = {
   rows?: number;
   placeholder?: string;
   defaultValue?: string;
+  value?: string;
+  onValueChange?: (nextValue: string) => void;
+  toolbarLeading?: ReactNode;
+  toolbarTrailing?: ReactNode;
   className?: string;
 };
  
@@ -35,10 +40,24 @@ export default function MarkdownEditor({
   rows = 12,
   placeholder,
   defaultValue = "",
+  value: controlledValue,
+  onValueChange,
+  toolbarLeading,
+  toolbarTrailing,
   className,
 }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [value, setValue] = useState(defaultValue);
+  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const isControlled = controlledValue !== undefined;
+  const value = isControlled ? controlledValue : uncontrolledValue;
+
+  const setValue = useCallback(
+    (nextValue: string) => {
+      if (!isControlled) setUncontrolledValue(nextValue);
+      onValueChange?.(nextValue);
+    },
+    [isControlled, onValueChange],
+  );
 
   const applyWrap = useCallback((before: string, after: string) => {
     const el = textareaRef.current;
@@ -57,15 +76,16 @@ export default function MarkdownEditor({
       el.selectionStart = nextSelectionStart;
       el.selectionEnd = nextSelectionEnd;
     });
-  }, []);
+  }, [setValue]);
 
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap items-center gap-2">
+        {toolbarLeading}
         <button
           type="button"
           onClick={() => applyWrap("**", "**")}
-          className="inline-flex items-center justify-center h-9 px-3 rounded-lg border border-[var(--borderSoft)] bg-[var(--surface)] text-[12px] font-bold tracking-wide text-[var(--text-secondary)] hover:bg-[var(--surfaceAlt)] transition-colors"
+          className="inline-flex items-center justify-center h-9 px-4 rounded-xl border border-[var(--borderSoft)] bg-[var(--surface)] text-[12px] font-bold tracking-wide text-[var(--text-secondary)] hover:bg-[var(--surfaceAlt)] transition-colors"
           aria-label="Bold"
           title="Bold"
         >
@@ -75,17 +95,21 @@ export default function MarkdownEditor({
         <button
           type="button"
           onClick={() => applyWrap("==", "==")}
-          className="inline-flex items-center justify-center h-9 px-3 rounded-lg border border-[var(--borderSoft)] bg-[var(--surface)] text-[12px] font-bold tracking-wide text-[var(--text-secondary)] hover:bg-[var(--surfaceAlt)] transition-colors"
+          className="inline-flex items-center justify-center h-9 px-4 rounded-xl border border-[var(--borderSoft)] bg-[var(--surface)] text-[12px] font-bold tracking-wide text-[var(--text-secondary)] hover:bg-[var(--surfaceAlt)] transition-colors"
           aria-label="Highlight"
           title="Highlight"
         >
           Highlight
         </button>
 
-        <div className="text-[12px] text-[var(--text-muted)] ml-auto">
-          Bold: <span className="font-mono">**text**</span> · Highlight:{" "}
-          <span className="font-mono">==text==</span>
-        </div>
+        {toolbarTrailing ? (
+          <div className="ml-auto">{toolbarTrailing}</div>
+        ) : (
+          <div className="hidden md:block text-[12px] text-[var(--text-muted)] ml-auto">
+            Bold: <span className="font-mono">**text**</span> · Highlight:{" "}
+            <span className="font-mono">==text==</span>
+          </div>
+        )}
       </div>
 
       <textarea

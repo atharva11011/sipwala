@@ -43,7 +43,7 @@ export default async function AdminBlogPreviewPage({ params }: PageProps) {
 
           <Link
             href={`/admin/blogs/${blog.id}/edit`}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors"
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue-600-rgb)/0.25)] focus-visible:ring-inset"
           >
             Edit
             <span className="material-symbols-outlined text-[16px]">edit</span>

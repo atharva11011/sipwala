@@ -139,7 +139,7 @@ export default async function AdminHomePage() {
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/admin/blogs/${blog.id}/edit`}
-                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors"
+                      className="inline-flex items-center gap-2 h-10 px-3 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue-600-rgb)/0.25)] focus-visible:ring-inset"
                     >
                       <span className="material-symbols-outlined text-[16px]">
                         edit
@@ -149,7 +149,7 @@ export default async function AdminHomePage() {
 
                     <Link
                       href={`/admin/blogs/${blog.id}/view`}
-                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors"
+                      className="inline-flex items-center gap-2 h-10 px-3 rounded-xl text-[13px] font-bold text-[var(--text-secondary)] border border-[var(--border)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue-600-rgb)/0.25)] focus-visible:ring-inset"
                     >
                       <span className="material-symbols-outlined text-[16px]">visibility</span>
                       View
@@ -159,7 +159,7 @@ export default async function AdminHomePage() {
                       id={blog.id}
                       redirectTo="/admin"
                       action={deleteBlogPostAction}
-                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-bold text-[rgb(var(--red-700-rgb)/0.95)] border border-[rgb(var(--red-600-rgb)/0.35)] hover:border-[rgb(var(--red-600-rgb)/0.55)] transition-colors disabled:opacity-50"
+                      className="inline-flex items-center gap-2 h-10 px-3 rounded-xl text-[13px] font-bold text-[rgb(var(--red-700-rgb)/0.95)] border border-[rgb(var(--red-600-rgb)/0.35)] hover:border-[rgb(var(--red-600-rgb)/0.55)] transition-colors whitespace-nowrap disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--red-600-rgb)/0.18)] focus-visible:ring-inset"
                     />
                   </div>
                 </div>

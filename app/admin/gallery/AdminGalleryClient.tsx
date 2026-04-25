@@ -413,17 +413,17 @@ export default function AdminGalleryClient({ images }: Props) {
                     </span>
                   </div>
 
-                  <div className="flex gap-3 mt-4">
+                  <div className="flex gap-0 mt-4 border border-[var(--borderSoft)] rounded-xl overflow-hidden bg-[var(--surface)]">
                     <button
                       onClick={() => handleEditImage(image)}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-[var(--blue-600)] to-[var(--blue-700)] text-[var(--text-white)] text-[13px] font-bold rounded-lg hover:shadow-lg hover:from-[var(--blue-700)] hover:to-[var(--blue-800)] transition-all duration-200 flex items-center justify-center gap-2 group"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-[var(--blue-600)] to-[var(--blue-700)] text-[var(--text-white)] text-[13px] font-bold hover:shadow-lg hover:from-[var(--blue-700)] hover:to-[var(--blue-800)] transition-all duration-200 flex items-center justify-center gap-2 group border-r border-[var(--borderSoft)]"
                     >
                       <span className="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">edit</span>
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteImage(image.id)}
-                      className="flex-1 px-4 py-3 bg-[var(--error)] bg-opacity-15 text-[var(--error)] text-[13px] font-bold rounded-lg hover:bg-opacity-25 hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 group border border-[var(--error)] border-opacity-20"
+                      className="flex-1 px-4 py-3 bg-[var(--error)] bg-opacity-15 text-[var(--error)] text-[13px] font-bold hover:bg-opacity-25 hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 group"
                     >
                       <span className="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">delete</span>
                       Delete

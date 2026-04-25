@@ -39,17 +39,20 @@ export default async function AdminBlogsPage() {
         </div>
       ) : (
         <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--borderSoft)]">
-          <div className="grid grid-cols-12 bg-[var(--surfaceAlt)] px-4 py-3 text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)]">
-            <div className="col-span-6">Title</div>
-            <div className="col-span-3">Tag</div>
-            <div className="col-span-2">Published</div>
-            <div className="col-span-1 text-right">Link</div>
+          <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,220px)_minmax(0,160px)_auto] sm:gap-4 bg-[var(--surfaceAlt)] px-4 py-3 text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)]">
+            <div>Title</div>
+            <div className="hidden sm:block">Tag</div>
+            <div className="hidden sm:block">Published</div>
+            <div className="hidden sm:block text-right">Actions</div>
           </div>
 
           <div className="divide-y divide-[var(--borderSoft)]">
             {blogs.map((blog) => (
-              <div key={blog.id} className="grid grid-cols-12 px-4 py-4">
-                <div className="col-span-12 sm:col-span-6">
+              <div
+                key={blog.id}
+                className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,220px)_minmax(0,160px)_auto] sm:gap-4 px-4 py-4"
+              >
+                <div className="min-w-0">
                   <div className="flex items-start gap-2">
                     <div className="min-w-0">
                       <div className="font-headline font-bold text-[15px] leading-[1.35] text-[var(--text-primary)]">
@@ -68,41 +71,39 @@ export default async function AdminBlogsPage() {
                   </div>
                 </div>
 
-                <div className="col-span-6 sm:col-span-3 mt-3 sm:mt-0">
+                <div className="mt-3 sm:mt-0">
                   <span className="inline-flex text-[11px] font-bold uppercase tracking-wide px-3 py-1 rounded-full bg-[var(--blue-50)] text-[var(--blue-700)] border border-[var(--blue-200)]">
                     {blog.tag}
                   </span>
                 </div>
 
-                <div className="col-span-6 sm:col-span-2 mt-3 sm:mt-0 text-[13px] text-[var(--text-secondary)]">
+                <div className="mt-3 sm:mt-0 text-[13px] text-[var(--text-secondary)]">
                   {formatDisplayDate(blog.publishedAt)}
                 </div>
 
-                <div className="col-span-12 sm:col-span-1 mt-3 sm:mt-0 flex sm:justify-end">
-                  <div className="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-1">
+                <div className="mt-3 sm:mt-0 flex justify-start sm:justify-end">
+                  <div className="flex flex-wrap items-center gap-2">
                     <Link
                       href={`/admin/blogs/${blog.id}/edit`}
-                      className="inline-flex items-center gap-1 text-[13px] font-bold text-[var(--blue-700)] hover:underline"
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-bold whitespace-nowrap bg-[var(--surface)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue-600-rgb)/0.25)] focus-visible:ring-inset"
                     >
+                      <span className="material-symbols-outlined text-[16px]">edit</span>
                       Edit
-                      <span className="material-symbols-outlined text-[16px]">
-                        edit
-                      </span>
                     </Link>
 
                     <Link
                       href={`/admin/blogs/${blog.id}/view`}
-                      className="inline-flex items-center gap-1 text-[13px] font-bold text-[var(--blue-700)] hover:underline"
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-bold whitespace-nowrap bg-[var(--surface)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--blue-200)] hover:text-[var(--blue-700)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue-600-rgb)/0.25)] focus-visible:ring-inset"
                     >
-                      View
                       <span className="material-symbols-outlined text-[16px]">visibility</span>
+                      View
                     </Link>
 
                     <ConfirmDeleteButton
                       id={blog.id}
                       redirectTo="/admin/blogs"
                       action={deleteBlogPostAction}
-                      className="inline-flex items-center gap-1 text-[13px] font-bold text-[rgb(var(--red-700-rgb)/0.95)] hover:underline disabled:opacity-50"
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-bold whitespace-nowrap bg-[rgb(var(--red-700-rgb)/0.03)] border border-[rgb(var(--red-600-rgb)/0.35)] text-[rgb(var(--red-700-rgb)/0.95)] hover:border-[rgb(var(--red-600-rgb)/0.55)] hover:bg-[rgb(var(--red-700-rgb)/0.05)] transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--red-600-rgb)/0.18)] focus-visible:ring-inset"
                     />
                   </div>
                 </div>
