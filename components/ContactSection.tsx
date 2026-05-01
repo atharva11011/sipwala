@@ -1,4 +1,87 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
+
+function buildWhatsAppLeadText(form: {
+  name: string;
+  email: string;
+  phone: string;
+  interest: string;
+  message: string;
+}): string {
+  return `New Lead 🚀\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "-"}\nInterest: ${form.interest}\nMessage: ${form.message || "-"}`;
+}
+
+function openWhatsAppLead(form: {
+  name: string;
+  email: string;
+  phone: string;
+  interest: string;
+  message: string;
+}) {
+  const whatsappNumber = "919922493183";
+  const text = buildWhatsAppLeadText(form);
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) {
+    // Popup blockers may prevent new tabs; fall back to same-tab navigation.
+    window.location.href = url;
+  }
+}
+
 export default function ContactSection() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [interest, setInterest] = useState("Monthly SIP");
+  const [message, setMessage] = useState("");
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    const formSnapshot = {
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      interest: interest.trim() || "Monthly SIP",
+      message: message.trim(),
+    };
+
+    // Open WhatsApp from the user gesture to avoid popup blockers.
+    openWhatsAppLead(formSnapshot);
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formSnapshot),
+      });
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(text || res.statusText || "Request failed");
+      }
+
+      setName("");
+      setEmail("");
+      setPhone("");
+      setInterest("Monthly SIP");
+      setMessage("");
+      setIsSubmitting(false);
+    } catch (err) {
+      console.error("Contact form submit failed:", err);
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section
       className="py-16 md:py-24 bg-[var(--surface)]"
@@ -30,7 +113,7 @@ export default function ContactSection() {
             <h3 className="font-headline text-[18px] font-bold leading-[1.3] text-[var(--text-primary)] mb-8">
               Personalised Consultation
             </h3>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
@@ -38,7 +121,11 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="text"
+                    name="name"
+                    required
                     placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
                   />
                 </div>
@@ -48,7 +135,11 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    required
                     placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
                   />
                 </div>
@@ -60,7 +151,10 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
                     placeholder="+91 "
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
                   />
                 </div>
@@ -68,7 +162,12 @@ export default function ContactSection() {
                   <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
                     Investment Interest
                   </label>
-                  <select className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] outline-none text-[14px] leading-[1.75] cursor-pointer">
+                  <select
+                    name="interest"
+                    value={interest}
+                    onChange={(e) => setInterest(e.target.value)}
+                    className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] outline-none text-[14px] leading-[1.75] cursor-pointer"
+                  >
                     <option>Monthly SIP</option>
                     <option>Lumpsum Investment</option>
                     <option>Tax Saving (ELSS)</option>
@@ -83,13 +182,17 @@ export default function ContactSection() {
                   Message (Optional)
                 </label>
                 <textarea
+                  name="message"
                   placeholder="How can we help you grow?"
                   rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] resize-none outline-none text-[14px] leading-[1.75]"
                 />
               </div>
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="btn-primary w-full text-[var(--text-white)] font-headline font-bold py-4 rounded-xl bg-[linear-gradient(135deg,var(--blue-700),var(--blue-800))] active:scale-95 transition-transform text-[16px]"
               >
                 Send Message

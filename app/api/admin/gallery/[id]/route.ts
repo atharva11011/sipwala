@@ -12,10 +12,10 @@ export async function DELETE(
       return Response.json({ error: "Missing ID" }, { status: 400 });
     }
 
-    // On Vercel: Cannot delete (read-only filesystem)
-    // Solution: Edit public/data/gallery.json manually in GitHub
-    
-    if (process.env.VERCEL === "1") {
+    const backendUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    // If deployed on Vercel without a backend DB, filesystem deletes are not possible.
+    if (process.env.VERCEL === "1" && !backendUrl) {
       return Response.json({
         error: "Vercel is read-only. To delete images: 1) Edit public/data/gallery.json in GitHub, 2) Remove the image entry, 3) Commit & push. The gallery will update automatically.",
         success: false,
@@ -23,7 +23,7 @@ export async function DELETE(
       }, { status: 403 });
     }
 
-    // Local development: Use filesystem
+    // Backend (preferred) or local filesystem fallback
     const { deleteGalleryImageById } = await import("@/lib/galleryStore");
     await deleteGalleryImageById(id);
 
