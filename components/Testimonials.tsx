@@ -1,7 +1,9 @@
+
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa";
 
 type Testimonial = {
   name: string;
@@ -13,149 +15,197 @@ const testimonials: Testimonial[] = [
   {
     name: "Swapnil Navandar",
     role: "Investor",
-    text: "Meeting with Santosh Behare, CEO of sipwala, in 2019 was the turning point for me. Previously, my investments lacked discipline and relied heavily on hearsay or literature. However, after engaging with Santosh, I gained valuable insights into the importance of goal-oriented investments. It was enlightening to discuss financial strategies with him, and I'm grateful for the knowledge I've gained. I commend the work being done by sipwala under Santosh's leadership and wish him the best of luck. 👍👍",
+    text: "Meeting with Santosh Behare in 2019 completely changed my approach to investing. His goal-based guidance helped me build a disciplined investment strategy.",
   },
   {
     name: "Anil Chainani",
     role: "Investor",
-    text: "I am customer of sipwala since many years. Their Mutual Funds service is very good. Their website easy to use, I can see many funds and choose which one I want. They help me pick good funds for me. With their help, my money grows. I suggest everyone to use sipwala for investments.",
+    text: "I have been a customer for many years. The service is excellent and the investment recommendations have helped me grow my wealth steadily.",
   },
   {
     name: "Anand Katta",
     role: "Investor",
-    text: "Thanks to Groww Lakshmi Finserv, investing has never been easier. Their guidance and support have empowered me to make informed decisions for my financial future.",
+    text: "Investing has become much easier thanks to the guidance and support. I now feel more confident about my financial future.",
   },
   {
     name: "Amol Agrawal",
     role: "Investor",
-    text: "I met Santosh, 2.5 years ago, and since then, my financial outlook has drastically improved. His expert guidance has empowered me to make smarter decisions, ensuring a secure future. I highly recommend Santosh for anyone seeking trusted financial advice.",
+    text: "Professional advice and continuous support helped me make smarter financial decisions and build a secure future.",
   },
   {
     name: "Abhishek Nahata",
     role: "Investor",
-    text: "Thanks to Groww Lakshmi Finserv, Ive seen significant growth in my portfolio. Their tailored investment plans and dedicated team make all the difference.",
+    text: "Their personalized investment plans and dedicated service have delivered excellent results for my portfolio.",
   },
 ];
 
-function GoogleStarsRow() {
+const reviews = [...testimonials, ...testimonials];
+
+function Stars() {
   return (
-    <div className="flex items-center gap-1" aria-label="5 star rating">
-      {Array.from({ length: 5 }).map((_, idx) => (
-        <span
-          key={idx}
-          className="material-symbols-outlined text-[18px] text-[var(--gold-dark)]"
-          aria-hidden="true"
-        >
-          star
-        </span>
+    <div className="flex items-center gap-1">
+      {[...Array(5)].map((_, i) => (
+        <FaStar
+          key={i}
+          className="text-[#FBBF24] text-[13px]"
+        />
       ))}
     </div>
   );
 }
 
 export default function Testimonials() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const headingRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(headingRef, { once: true, margin: "-80px" });
-
-  const scrollLeft = () => {
-    scrollRef.current?.scrollBy({ left: -440, behavior: "smooth" });
-  };
-
-  const scrollRight = () => {
-    scrollRef.current?.scrollBy({ left: 440, behavior: "smooth" });
-  };
-
   return (
-    <section className="bg-[var(--surface)] py-16 md:py-24">
-      <div className="max-w-[1200px] mx-auto px-5 lg:px-8">
-
-        {/* Top heading block */}
-        <motion.div
-          ref={headingRef}
-          initial={{ opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-[620px]"
-        >
-          <div className="text-[11px] font-bold uppercase tracking-[2px] text-[var(--text-muted)] mb-3">
-            GOOGLE REVIEWS
+    <section className="bg-[var(--surface)] py-20 md:py-28 overflow-hidden">
+      <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
+        {/* Heading */}
+        <div className="mx-auto max-w-3xl text-center">
+          <div className="inline-flex items-center rounded-full border border-[#DBEAFE] bg-[#EFF6FF] px-4 py-1.5">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#2563EB]">
+              Client Testimonials
+            </span>
           </div>
-          <h2 className="font-headline text-[28px] md:text-[40px] font-extrabold text-[var(--text-primary)] leading-[1.2]">
-            Client Testimonials
-          </h2>
-        </motion.div>
 
-        {/* Cards row */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.08 }}
-          className="mt-14"
-        >
-          <div
-            ref={scrollRef}
-            className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory"
+          <h2
+            className="
+              mt-5
+              font-headline
+              text-[34px]
+              md:text-[52px]
+              font-extrabold
+              leading-[1.1]
+              tracking-tight
+              text-[var(--text-primary)]
+            "
           >
-            <div className="flex gap-6 pr-2">
-              {testimonials.map((t) => (
-                <div
-                  key={t.name}
-                  className="bg-[var(--surface)] border border-[var(--border)] rounded-xl p-6 md:p-8 min-w-[280px] md:min-w-[380px] max-w-[420px] snap-start transition-all duration-300 ease-out hover:border-[var(--blue-200)] hover:bg-[linear-gradient(160deg,var(--surface),var(--blue-50))] hover:-translate-y-1"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <GoogleStarsRow />
-                    <span className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-muted)]">
-                      Google review
-                    </span>
+            What our customers are saying
+          </h2>
+
+          <p
+            className="
+              mx-auto
+              mt-4
+              max-w-2xl
+              text-[15px]
+              leading-7
+              text-[var(--text-muted)]
+            "
+          >
+            Trusted by investors across India for reliable financial
+            guidance, wealth creation, and long-term investment success.
+          </p>
+        </div>
+
+        {/* Testimonials Marquee */}
+        <div className="relative mt-16 overflow-hidden">
+          <motion.div
+            animate={{
+              x: ["0%", "-50%"],
+            }}
+            transition={{
+              duration: 40,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="flex w-max gap-6"
+          >
+            {reviews.map((review, index) => (
+              <div
+                key={`${review.name}-${index}`}
+                className="
+                  group
+                  w-[340px]
+                  rounded-3xl
+                  border
+                  border-[#D9E2F2]
+                  bg-white
+                  shadow-sm
+                  overflow-hidden
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-[#2563EB]
+                  hover:shadow-lg
+                "
+              >
+                {/* Top Accent */}
+                <div className="h-1 bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#60A5FA]" />
+
+                <div className="p-7">
+                  {/* User */}
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="
+                        flex
+                        h-12
+                        w-12
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#DBEAFE]
+                        bg-[#EFF6FF]
+                      "
+                    >
+                      <span className="material-symbols-outlined text-[#2563EB]">
+                        person
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-[17px] font-semibold text-[var(--text-primary)]">
+                        {review.name}
+                      </h3>
+
+                      <p className="text-sm text-[var(--text-muted)]">
+                        {review.role}
+                      </p>
+                    </div>
                   </div>
 
-                  <p className="text-[14px] md:text-[16px] font-normal text-[var(--text-primary)] leading-[1.8] mt-5 mb-6">
-                    {t.text}
+                  {/* Review Text */}
+                  <p
+                    className="
+                      mt-5
+                      min-h-[120px]
+                      text-[14px]
+                      leading-7
+                      text-[var(--text-muted)]
+                    "
+                  >
+                    {review.text}
                   </p>
 
-                  <div className="text-[16px] font-bold text-[var(--text-primary)] mb-1">
-                    {t.name}
-                  </div>
-                  <div className="text-[12px] font-normal text-[var(--text-muted)] leading-[1.75]">
-                    {t.role}
+                  {/* Footer */}
+                  <div className="mt-6 flex items-center justify-between border-t border-[#EEF2FF] pt-4">
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src="/google-logo.svg"
+                        alt="Google"
+                        width={18}
+                        height={18}
+                      />
+
+                      <span className="text-[12px] font-medium text-[var(--text-muted)]">
+                        Google Review
+                      </span>
+                    </div>
+
+                    <Stars />
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+              </div>
+            ))}
+          </motion.div>
 
-        {/* Scroll buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.14 }}
-          className="mt-12 w-full flex items-center justify-end gap-3"
-        >
-          <motion.button
-            type="button"
-            onClick={scrollLeft}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-12 h-12 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] hover:bg-[var(--gray-50)] transition-colors flex items-center justify-center"
-            aria-label="Scroll testimonials left"
-          >
-            <span className="material-symbols-outlined">chevron_left</span>
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={scrollRight}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-12 h-12 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] hover:bg-[var(--gray-50)] transition-colors flex items-center justify-center"
-            aria-label="Scroll testimonials right"
-          >
-            <span className="material-symbols-outlined">chevron_right</span>
-          </motion.button>
-        </motion.div>
+          {/* Left Fade */}
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-[var(--surface)] to-transparent" />
+
+          {/* Right Fade */}
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-[var(--surface)] to-transparent" />
+        </div>
       </div>
     </section>
   );
 }
+

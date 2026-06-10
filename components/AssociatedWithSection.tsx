@@ -9,74 +9,117 @@ type Logo = {
 
 function titleFromFilename(filename: string) {
   const base = filename.replace(/\.[^/.]+$/, "");
+
   return base
     .replace(/[-_]+/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 async function getLogos(): Promise<Logo[]> {
   const logosDir = path.join(process.cwd(), "public", "logos");
-  let entries: string[];
-  try {
-    entries = await fs.readdir(logosDir);
-  } catch (error: unknown) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      (error as { code?: string }).code === "ENOENT"
-    ) {
-      return [];
-    }
-    throw error;
-  }
 
-  return entries
-    .filter((name) => name.toLowerCase().endsWith(".png"))
-    .filter((name) => !name.toLowerCase().includes("sipwala"))
-    .sort((a, b) =>
-      a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" })
-    )
-    .map((filename) => ({
-      src: `/logos/${filename}`,
-      alt: titleFromFilename(filename),
-    }));
+  try {
+    const entries = await fs.readdir(logosDir);
+
+    return entries
+      .filter((file) => file.toLowerCase().endsWith(".png"))
+      .filter((file) => !file.toLowerCase().includes("sipwala"))
+      .sort((a, b) =>
+        a.localeCompare(b, undefined, {
+          numeric: true,
+          sensitivity: "base",
+        })
+      )
+      .map((file) => ({
+        src: `/logos/${file}`,
+        alt: titleFromFilename(file),
+      }));
+  } catch {
+    return [];
+  }
 }
 
 export default async function AssociatedWithSection() {
   const logos = await getLogos();
 
-  if (logos.length === 0) return null;
+  if (!logos.length) return null;
 
   return (
     <section
-      className="bg-[var(--surface)] py-16 md:py-24"
+      className="bg-[#fafafa] py-20 md:py-28"
       role="region"
       aria-labelledby="associated-with-title"
     >
-      <div className="mx-auto max-w-[1200px] px-5 lg:px-8">
-        <h2
-          id="associated-with-title"
-          className="text-center font-headline text-[28px] md:text-[40px] font-extrabold tracking-tight leading-[1.2] text-[var(--text-primary)]"
-        >
-          Associated With
-        </h2>
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <div className="text-center">
+          <h2
+            id="associated-with-title"
+            className="
+              text-4xl
+              font-extrabold
+              tracking-tight
+              text-slate-900
+              md:text-5xl
+            "
+          >
+            Associated With
+          </h2>
 
-        <div className="mx-auto mt-12 grid max-w-lg grid-cols-3 items-center gap-x-6 gap-y-12 sm:max-w-xl sm:grid-cols-4 sm:gap-x-8 md:grid-cols-5 lg:mx-0 lg:max-w-none lg:grid-cols-6 lg:gap-x-10 lg:gap-y-14">
+          <p className="mx-auto mt-4 max-w-2xl text-sm text-slate-500 md:text-base">
+            Trusted partnerships with leading mutual fund houses and
+            financial institutions.
+          </p>
+        </div>
+
+        <div
+          className="
+            mx-auto
+            mt-14
+            grid
+            max-w-6xl
+            grid-cols-2
+            gap-5
+            sm:grid-cols-3
+            md:grid-cols-4
+            lg:grid-cols-6
+          "
+        >
           {logos.map((logo) => (
             <div
               key={logo.alt}
-              className="flex min-h-32 w-full items-center justify-center rounded-md bg-white/40 transition-transform duration-300 hover:bg-white/60 hover:scale-105 py-6"
+              className="
+                group
+                flex
+                h-[100px]
+                items-center
+                justify-center
+                rounded-2xl
+                border
+                border-gray-200
+                bg-white
+                p-4
+                shadow-sm
+                transition-all
+                duration-300
+                hover:-translate-y-1
+                hover:border-gray-300
+                hover:shadow-lg
+              "
             >
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={180}
-                height={100}
-                className="max-h-28 w-auto object-contain px-4"
-                sizes="(min-width: 1024px) 180px, (min-width: 768px) 160px, (min-width: 640px) 140px, 120px"
-                priority={false}
-              />
+              <div className="relative h-[55px] w-[140px]">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  fill
+                  className="
+                    object-contain
+                    transition-transform
+                    duration-300
+                    group-hover:scale-105
+                  "
+                  sizes="140px"
+                />
+              </div>
             </div>
           ))}
         </div>

@@ -2,12 +2,18 @@ import { NextResponse } from "next/server";
 
 function getBackendBaseUrl(): string {
   const raw = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!raw) {
-    throw new Error(
-      "Backend URL is not configured. Set BACKEND_URL (recommended) or NEXT_PUBLIC_BACKEND_URL."
-    );
+  if (raw) {
+    return raw.replace(/\/+$/, "");
   }
-  return raw.replace(/\/+$/, "");
+
+  // In local development, default to the expected backend port if env vars are not set.
+  if (process.env.NODE_ENV !== "production") {
+    return "http://localhost:4000";
+  }
+
+  throw new Error(
+    "Backend URL is not configured. Set BACKEND_URL (recommended) or NEXT_PUBLIC_BACKEND_URL."
+  );
 }
 
 type ContactPayload = {
@@ -67,6 +73,7 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Internal server error";
+    console.error("/api/contact proxy failed:", error);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

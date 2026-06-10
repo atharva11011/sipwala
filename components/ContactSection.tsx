@@ -19,15 +19,15 @@ function openWhatsAppLead(form: {
   interest: string;
   message: string;
 }) {
-  const whatsappNumber = "919922493183";
-  const text = buildWhatsAppLeadText(form);
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+  // const whatsappNumber = "919922493183";
+  // const text = buildWhatsAppLeadText(form);
+  // const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
-  const win = window.open(url, "_blank", "noopener,noreferrer");
-  if (!win) {
-    // Popup blockers may prevent new tabs; fall back to same-tab navigation.
-    window.location.href = url;
-  }
+  // const win = window.open(url, "_blank", "noopener,noreferrer");
+  // if (!win) {
+  //   // Popup blockers may prevent new tabs; fall back to same-tab navigation.
+  //   window.location.href = url;
+  // }
 }
 
 export default function ContactSection() {
@@ -57,7 +57,7 @@ export default function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -65,9 +65,10 @@ export default function ContactSection() {
         body: JSON.stringify(formSnapshot),
       });
 
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || res.statusText || "Request failed");
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Backend Error Details:", errorText);
+        throw new Error(errorText);
       }
 
       setName("");
