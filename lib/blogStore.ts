@@ -1,9 +1,3 @@
-// import "server-only";
-
-import fs from "node:fs/promises";
-import path from "node:path";
-import crypto from "node:crypto";
-
 export type BlogPost = {
   id: string;
   slug: string;
@@ -12,8 +6,10 @@ export type BlogPost = {
   content: string;
   tag: string;
   featured: boolean;
-  publishedAt: string; // ISO date string
-  updatedAt?: string; // ISO date string
+  publishedAt: string;
+  updatedAt?: string;
+  author?: string;
+  image?: string | null;
 };
 
 export type CreateBlogInput = {
@@ -23,53 +19,125 @@ export type CreateBlogInput = {
   content: string;
   tag: string;
   featured?: boolean;
-  publishedAt?: string; // ISO date string
+  publishedAt?: string;
 };
 
-const BLOGS_FILE_PATH = path.join(process.cwd(), "data", "blogs.json");
+function getBlogsApiUrl(): string {
+  const explicit = process.env.API_BASE_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+
+  const backend =
+    process.env.BACKEND_URL?.trim() ||
+    process.env.NEXT_PUBLIC_BACKEND_URL?.trim();
+
+  if (!backend) {
+    throw new Error(
+      "Blog API URL is not configured. Set API_BASE_URL or NEXT_PUBLIC_BACKEND_URL.",
+    );
+  }
+
+  return `${backend.replace(/\/$/, "")}/api/blogs`;
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-function isBlogPost(value: unknown): value is BlogPost {
-  if (!isRecord(value)) return false;
-
-  return (
-    typeof value.id === "string" &&
-    typeof value.slug === "string" &&
-    typeof value.title === "string" &&
-    typeof value.excerpt === "string" &&
-    typeof value.content === "string" &&
-    typeof value.tag === "string" &&
-    typeof value.featured === "boolean" &&
-    typeof value.publishedAt === "string"
-  );
+function readString(value: unknown): string {
+  return typeof value === "string" ? value : "";
 }
 
-async function ensureBlogsFileExists() {
-  const dir = path.dirname(BLOGS_FILE_PATH);
-  await fs.mkdir(dir, { recursive: true });
+function readBoolean(value: unknown): boolean {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") return value.toLowerCase() === "true";
+  return Boolean(value);
+}
+
+function extractPayload(value: unknown): unknown {
+  if (!isRecord(value)) return value;
+
+  if ("data" in value) return value.data;
+  if ("blog" in value) return value.blog;
+  if ("post" in value) return value.post;
+
+  return value;
+}
+
+function normalizeBlog(value: unknown): BlogPost | null {
+  if (!isRecord(value)) return null;
+
+  const id = readString(value.id) || readString(value._id);
+  const title = readString(value.title);
+  const slug = readString(value.slug) || slugify(title);
+  const excerpt =
+    readString(value.excerpt) ||
+    readString(value.description) ||
+    readString(value.summary);
+  const content = readString(value.content) || readString(value.body);
+  const tag =
+    readString(value.tag) ||
+    readString(value.category) ||
+    readString(value.type) ||
+    "Blog";
+  const publishedAt =
+    readString(value.publishedAt) ||
+    readString(value.createdAt) ||
+    readString(value.date) ||
+    new Date().toISOString();
+
+  if (!id || !slug || !title) return null;
+
+  return {
+    id,
+    slug,
+    title,
+    excerpt,
+    content,
+    tag,
+    featured: readBoolean(value.featured),
+    publishedAt,
+    updatedAt: readString(value.updatedAt) || undefined,
+    author: readString(value.author) || undefined,
+    image: typeof value.image === "string" ? value.image : null,
+  };
+}
+
+async function readJson(response: Response): Promise<unknown> {
+  const text = await response.text();
+  if (!text.trim()) return null;
 
   try {
-    await fs.access(BLOGS_FILE_PATH);
+    return JSON.parse(text);
   } catch {
-    await fs.writeFile(BLOGS_FILE_PATH, "[]\n", "utf8");
+    return null;
   }
 }
 
-async function readBlogsUnsafe(): Promise<unknown> {
-  await ensureBlogsFileExists();
-  const raw = await fs.readFile(BLOGS_FILE_PATH, "utf8");
-  return JSON.parse(raw);
-}
+async function requestBlogApi(
+  path = "",
+  init?: RequestInit,
+): Promise<unknown> {
+  const response = await fetch(`${getBlogsApiUrl()}${path}`, {
+    cache: "no-store",
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
 
-async function writeBlogs(posts: BlogPost[]) {
-  await ensureBlogsFileExists();
+  const json = await readJson(response);
 
-  const tmpPath = `${BLOGS_FILE_PATH}.tmp`;
-  await fs.writeFile(tmpPath, `${JSON.stringify(posts, null, 2)}\n`, "utf8");
-  await fs.rename(tmpPath, BLOGS_FILE_PATH);
+  if (!response.ok) {
+    const message =
+      isRecord(json) && typeof json.message === "string"
+        ? json.message
+        : `Blog API request failed with status ${response.status}`;
+
+    throw new Error(message);
+  }
+
+  return extractPayload(json);
 }
 
 export function slugify(input: string): string {
@@ -97,9 +165,7 @@ export function formatMonthShort(isoDate: string): string {
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) return "";
 
-  return date
-    .toLocaleDateString("en-US", { month: "short" })
-    .toUpperCase();
+  return date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
 }
 
 export function formatDay2(isoDate: string): string {
@@ -111,8 +177,7 @@ export function formatDay2(isoDate: string): string {
 
 export function estimateReadTimeMinutes(text: string): number {
   const words = text.trim().split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(1, Math.round(words / 200));
-  return minutes;
+  return Math.max(1, Math.round(words / 200));
 }
 
 export function formatReadTime(minutes: number): string {
@@ -120,15 +185,21 @@ export function formatReadTime(minutes: number): string {
 }
 
 export async function getAllBlogs(): Promise<BlogPost[]> {
-  const parsed = await readBlogsUnsafe();
-  if (!Array.isArray(parsed)) return [];
+  try {
+    const payload = await requestBlogApi();
+    const rows = Array.isArray(payload) ? payload : [];
 
-  const posts = parsed.filter(isBlogPost);
-  posts.sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  );
-
-  return posts;
+    return rows
+      .map(normalizeBlog)
+      .filter((blog): blog is BlogPost => Boolean(blog))
+      .sort(
+        (a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+      );
+  } catch (error) {
+    console.error("Blog fetch error:", error);
+    return [];
+  }
 }
 
 export async function getBlogBySlug(slug: string): Promise<BlogPost | null> {
@@ -142,96 +213,47 @@ export async function getBlogById(id: string): Promise<BlogPost | null> {
 }
 
 export async function createBlog(input: CreateBlogInput): Promise<BlogPost> {
-  const title = input.title.trim();
-  const excerpt = input.excerpt.trim();
-  const content = input.content.trim();
-  const tag = input.tag.trim();
+  const payload = await requestBlogApi("", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
 
-  if (!title || !excerpt || !content || !tag) {
-    throw new Error("Missing required fields");
-  }
-
-  const slug = (input.slug?.trim() ? slugify(input.slug) : slugify(title)).trim();
-  if (!slug) throw new Error("Invalid slug");
+  const blog = normalizeBlog(payload);
+  if (blog) return blog;
 
   const posts = await getAllBlogs();
-  if (posts.some((p) => p.slug === slug)) {
-    throw new Error("Slug already exists");
-  }
-
-  const now = new Date();
-  const publishedAt = input.publishedAt?.trim() || now.toISOString();
-
-  const id = crypto.randomUUID();
-
-  const post: BlogPost = {
-    id,
+  const slug = input.slug ? slugify(input.slug) : slugify(input.title);
+  return posts.find((post) => post.slug === slug) ?? {
+    id: slug,
     slug,
-    title,
-    excerpt,
-    content,
-    tag,
+    title: input.title,
+    excerpt: input.excerpt,
+    content: input.content,
+    tag: input.tag,
     featured: Boolean(input.featured),
-    publishedAt,
-    updatedAt: now.toISOString(),
+    publishedAt: input.publishedAt ?? new Date().toISOString(),
   };
-
-  await writeBlogs([post, ...posts]);
-  return post;
 }
 
 export async function updateBlogById(
   id: string,
   input: CreateBlogInput,
 ): Promise<BlogPost> {
-  const title = input.title.trim();
-  const excerpt = input.excerpt.trim();
-  const content = input.content.trim();
-  const tag = input.tag.trim();
+  const payload = await requestBlogApi(`/${encodeURIComponent(id)}`, {
+    method: "PUT",
+    body: JSON.stringify(input),
+  });
 
-  if (!title || !excerpt || !content || !tag) {
-    throw new Error("Missing required fields");
-  }
+  const blog = normalizeBlog(payload);
+  if (blog) return blog;
 
-  const posts = await getAllBlogs();
-  const index = posts.findIndex((p) => p.id === id);
-  if (index === -1) throw new Error("Blog not found");
-
-  const existing = posts[index]!;
-
-  const nextSlug = (
-    input.slug?.trim()
-      ? slugify(input.slug)
-      : slugify(existing.slug || title)
-  ).trim();
-  if (!nextSlug) throw new Error("Invalid slug");
-  if (posts.some((p) => p.slug === nextSlug && p.id !== id)) {
-    throw new Error("Slug already exists");
-  }
-
-  const publishedAt = input.publishedAt?.trim() || existing.publishedAt;
-  const now = new Date();
-
-  const next: BlogPost = {
-    ...existing,
-    slug: nextSlug,
-    title,
-    excerpt,
-    content,
-    tag,
-    featured: Boolean(input.featured),
-    publishedAt,
-    updatedAt: now.toISOString(),
-  };
-
-  const updated = [...posts];
-  updated[index] = next;
-  await writeBlogs(updated);
-  return next;
+  const updated = await getBlogById(id);
+  if (!updated) throw new Error("Blog not found after update");
+  return updated;
 }
 
 export async function deleteBlogById(id: string): Promise<void> {
-  const posts = await getAllBlogs();
-  const next = posts.filter((p) => p.id !== id);
-  await writeBlogs(next);
+  await requestBlogApi(`/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+  });
 }

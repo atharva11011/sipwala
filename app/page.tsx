@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   title: "Sipwala | Your Future, Cultivated with Precision",
 };
 
+export const dynamic = "force-dynamic";
+
 const stats = [
   { value: "44 CR +", label: "ASSETS UNDER MANAGEMENT", dot: "blue" },
   { value: "550 +", label: "HAPPY FAMILY", dot: "green" },

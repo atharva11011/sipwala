@@ -32,7 +32,7 @@ type NavLink = {
 
 const ABOUT_ITEMS: DropdownItem[] = [
   { href: "/company-profile", label: "Company Profile" },
-  { href: "/meet-our-founder", label: "Meet Our Founder" },
+  { href: "/meet-our-founder", label: "Meet Our Founder Santosh Behere" },
   { href: "/who-we-are", label: "Who We Are" },
   { href: "/about#gallery", label: "Gallery" },
 ];

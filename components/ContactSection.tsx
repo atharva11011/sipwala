@@ -19,15 +19,15 @@ function openWhatsAppLead(form: {
   interest: string;
   message: string;
 }) {
-  // const whatsappNumber = "919922493183";
-  // const text = buildWhatsAppLeadText(form);
-  // const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+  const whatsappNumber = "918983260641";
+  const text = buildWhatsAppLeadText(form);
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
-  // const win = window.open(url, "_blank", "noopener,noreferrer");
-  // if (!win) {
-  //   // Popup blockers may prevent new tabs; fall back to same-tab navigation.
-  //   window.location.href = url;
-  // }
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (!win) {
+    // Popup blockers may prevent new tabs; fall back to same-tab navigation.
+    window.location.href = url;
+  }
 }
 
 export default function ContactSection() {
