@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/adminAuth";
+import { resolveBlogImage } from "@/lib/blogImageUpload";
 import { createBlog } from "@/lib/blogStore";
 import NewBlogFormClient from "./NewBlogFormClient";
 
@@ -32,6 +33,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
       : undefined;
 
     try {
+      const image = await resolveBlogImage(formData);
       const post = await createBlog({
         title,
         slug: slug || undefined,
@@ -40,6 +42,7 @@ export default function AdminNewBlogPage({ searchParams }: PageProps) {
         content,
         featured,
         publishedAt,
+        image,
       });
 
       revalidatePath("/");

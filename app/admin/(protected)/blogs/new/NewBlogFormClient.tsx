@@ -25,6 +25,8 @@ export default function NewBlogFormClient({ error = "", createAction }: Props) {
   const [tag, setTag] = useState("");
   const [publishedAt, setPublishedAt] = useState("");
   const [featured, setFeatured] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
 
@@ -36,6 +38,8 @@ export default function NewBlogFormClient({ error = "", createAction }: Props) {
     tag.trim() !== "" ||
     publishedAt.trim() !== "" ||
     featured ||
+    imageUrl.trim() !== "" ||
+    imagePreview.trim() !== "" ||
     excerpt.trim() !== "" ||
     content.trim() !== "";
 
@@ -70,6 +74,16 @@ export default function NewBlogFormClient({ error = "", createAction }: Props) {
     if (!ok) e.preventDefault();
   };
 
+  const handleImageFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setImagePreview("");
+      return;
+    }
+
+    setImagePreview(URL.createObjectURL(file));
+  };
+
   return (
     <div className="bg-[var(--surface)] border border-[var(--borderSoft)] rounded-4xl p-6 sm:p-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -100,6 +114,7 @@ export default function NewBlogFormClient({ error = "", createAction }: Props) {
 
       <form
         action={createAction}
+        encType="multipart/form-data"
         onSubmit={() => {
           isSubmittingRef.current = true;
         }}
@@ -178,6 +193,39 @@ export default function NewBlogFormClient({ error = "", createAction }: Props) {
             Featured
           </span>
         </label>
+
+        <div className="space-y-3">
+          <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
+            Blog Image
+          </label>
+          <input
+            name="image"
+            type="text"
+            placeholder="/blogs/example.jpg or https://..."
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            className={inputClassName}
+          />
+          <input
+            name="imageFile"
+            type="file"
+            accept="image/*"
+            onChange={handleImageFileChange}
+            className="block w-full rounded-xl border border-dashed border-[var(--border)] bg-[var(--surfaceAlt)] px-4 py-3 text-[13px] text-[var(--text-secondary)] file:mr-4 file:rounded-lg file:border-0 file:bg-[var(--blue-50)] file:px-4 file:py-2 file:text-[12px] file:font-bold file:text-[var(--blue-700)]"
+          />
+          <p className="px-1 text-[12px] leading-6 text-[var(--text-muted)]">
+            Upload a cover image for the top area of blog cards, or paste an existing image path.
+          </p>
+          {imagePreview || imageUrl.trim() ? (
+            <div className="relative h-40 overflow-hidden rounded-2xl border border-[var(--borderSoft)] bg-[var(--surfaceAlt)]">
+              <img
+                src={imagePreview || imageUrl}
+                alt="Blog image preview"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          ) : null}
+        </div>
 
         <div className="space-y-2">
           <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">

@@ -20,6 +20,7 @@ export type CreateBlogInput = {
   tag: string;
   featured?: boolean;
   publishedAt?: string;
+  image?: string | null;
 };
 
 function getBlogsApiUrl(): string {
@@ -51,6 +52,17 @@ function readBoolean(value: unknown): boolean {
   if (typeof value === "boolean") return value;
   if (typeof value === "string") return value.toLowerCase() === "true";
   return Boolean(value);
+}
+
+function readOptionalImage(value: Record<string, unknown>): string | null {
+  const image =
+    readString(value.image) ||
+    readString(value.imageUrl) ||
+    readString(value.coverImage) ||
+    readString(value.featuredImage) ||
+    readString(value.thumbnail);
+
+  return image || null;
 }
 
 function extractPayload(value: unknown): unknown {
@@ -98,7 +110,7 @@ function normalizeBlog(value: unknown): BlogPost | null {
     publishedAt,
     updatedAt: readString(value.updatedAt) || undefined,
     author: readString(value.author) || undefined,
-    image: typeof value.image === "string" ? value.image : null,
+    image: readOptionalImage(value),
   };
 }
 
@@ -232,6 +244,7 @@ export async function createBlog(input: CreateBlogInput): Promise<BlogPost> {
     tag: input.tag,
     featured: Boolean(input.featured),
     publishedAt: input.publishedAt ?? new Date().toISOString(),
+    image: input.image ?? null,
   };
 }
 

@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 
 import MarkdownEditor from "@/components/admin/MarkdownEditor";
 import { requireAdmin } from "@/lib/adminAuth";
+import { resolveBlogImage } from "@/lib/blogImageUpload";
 import { getBlogById, slugify, updateBlogById } from "@/lib/blogStore";
 
 type PageProps = {
@@ -41,6 +42,7 @@ export default async function AdminEditBlogPage({ params, searchParams }: PagePr
     const publishedAt = publishedAtRaw ? new Date(publishedAtRaw).toISOString() : undefined;
 
     try {
+      const image = await resolveBlogImage(formData);
       const updated = await updateBlogById(params.id, {
         title,
         slug: slug || undefined,
@@ -49,6 +51,7 @@ export default async function AdminEditBlogPage({ params, searchParams }: PagePr
         content,
         featured,
         publishedAt,
+        image,
       });
 
       revalidatePath("/");
@@ -100,7 +103,7 @@ export default async function AdminEditBlogPage({ params, searchParams }: PagePr
         </div>
       ) : null}
 
-      <form action={updateAction} className="mt-8 space-y-6">
+      <form action={updateAction} encType="multipart/form-data" className="mt-8 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
@@ -166,6 +169,28 @@ export default async function AdminEditBlogPage({ params, searchParams }: PagePr
             Featured
           </span>
         </label>
+
+        <div className="space-y-2">
+          <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">
+            Blog Image
+          </label>
+          <input
+            name="image"
+            type="text"
+            defaultValue={blog.image ?? ""}
+            placeholder="/blogs/example.jpg or https://..."
+            className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--blue-600)] focus:ring-2 focus:ring-[rgb(var(--blue-600-rgb)/0.18)] transition-colors px-4 py-3 rounded-xl text-[var(--text-primary)] placeholder:text-[var(--gray-400)] outline-none text-[14px] leading-[1.75]"
+          />
+          <input
+            name="imageFile"
+            type="file"
+            accept="image/*"
+            className="block w-full rounded-xl border border-dashed border-[var(--border)] bg-[var(--surfaceAlt)] px-4 py-3 text-[13px] text-[var(--text-secondary)] file:mr-4 file:rounded-lg file:border-0 file:bg-[var(--blue-50)] file:px-4 file:py-2 file:text-[12px] file:font-bold file:text-[var(--blue-700)]"
+          />
+          <p className="px-1 text-[12px] leading-6 text-[var(--text-muted)]">
+            Upload a new image to replace the current card image, or edit the path above.
+          </p>
+        </div>
 
         <div className="space-y-2">
           <label className="text-[11px] font-bold tracking-[2px] uppercase text-[var(--text-secondary)] px-1 block">

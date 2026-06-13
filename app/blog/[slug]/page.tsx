@@ -37,6 +37,21 @@ export default async function BlogDetailPage({ params }: PageProps) {
         </Link>
 
         <div className="mt-8 bg-[var(--surface)] border border-[var(--borderSoft)] rounded-4xl p-6 sm:p-8 md:p-10">
+          
+          {blog.image && (
+            <div className="relative w-full h-64 md:h-[400px] mb-8 overflow-hidden rounded-2xl bg-gray-100">
+              <img
+                src={
+                  (blog.image || "").startsWith("http")
+                    ? blog.image
+                    : `https://media.bizonance.in/api/v1/image/download/eca82cda-d4d7-4fe5-915a-b0880bb8de74/bizonance/${blog.image || ""}`
+                }
+                alt={blog.title}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+          )}
+
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full bg-[var(--blue-50)] text-[var(--blue-700)] border border-[var(--blue-200)]">
               {blog.tag}

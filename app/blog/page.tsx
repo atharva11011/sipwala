@@ -50,31 +50,44 @@ export default async function BlogIndexPage() {
                   className="bg-[var(--surface)] rounded-3xl overflow-hidden border border-[var(--borderSoft)] hover:border-[var(--blue-200)] hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full"
                 >
                   <div className="relative h-36 overflow-hidden bg-[rgb(var(--blue-700-rgb)/0.08)]">
+                    {blog.image ? (
+                      <img
+                        src={
+                          (blog.image || "").startsWith("http")
+                            ? blog.image
+                            : `https://media.bizonance.in/api/v1/image/download/eca82cda-d4d7-4fe5-915a-b0880bb8de74/bizonance/${blog.image || ""}`
+                        }
+                        alt={blog.title}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 pointer-events-none">
+                          <div className="absolute -top-10 -right-14 w-40 h-40 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
+                          <div className="absolute top-10 -right-8 w-28 h-28 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
+                          <div className="absolute -bottom-14 left-10 w-44 h-44 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
+                          <div className="absolute -bottom-10 -left-10 w-28 h-28 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
+                        </div>
+
+                        <div className="absolute bottom-4 left-6 leading-none">
+                          <div className="text-5xl font-extrabold tracking-tighter text-[var(--blue-700)]">
+                            {day}
+                          </div>
+                          <div className="text-xs font-bold uppercase tracking-widest opacity-70 text-[var(--blue-700)]">
+                            {month}
+                          </div>
+                        </div>
+                      </>
+                    )}
+
                     {blog.featured ? (
-                      <div className="absolute top-4 left-4 bg-[var(--green-600)] text-[var(--text-white)] text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                      <div className="absolute left-4 top-4 z-10 rounded-full bg-[var(--green-600)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-[var(--text-white)]">
                         Featured
                       </div>
                     ) : null}
 
-                    <div className="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full bg-[var(--blue-50)] text-[var(--blue-700)] border border-[var(--blue-200)]">
+                    <div className="absolute right-4 top-4 z-10 rounded-full border border-[var(--blue-200)] bg-[var(--blue-50)] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--blue-700)]">
                       {blog.tag}
-                    </div>
-
-                    {/* Decorative circles */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      <div className="absolute -top-10 -right-14 w-40 h-40 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                      <div className="absolute top-10 -right-8 w-28 h-28 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                      <div className="absolute -bottom-14 left-10 w-44 h-44 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                      <div className="absolute -bottom-10 -left-10 w-28 h-28 rounded-full bg-[rgb(var(--blue-700-rgb)/0.05)]" />
-                    </div>
-
-                    <div className="absolute bottom-4 left-6 leading-none">
-                      <div className="text-5xl font-extrabold tracking-tighter text-[var(--blue-700)]">
-                        {day}
-                      </div>
-                      <div className="text-xs font-bold uppercase tracking-widest opacity-70 text-[var(--blue-700)]">
-                        {month}
-                      </div>
                     </div>
                   </div>
 

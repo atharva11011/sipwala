@@ -57,24 +57,37 @@ export default async function BlogSection() {
                   className="group flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--borderSoft)] bg-[var(--surface)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--blue-200)] hover:shadow-lg"
                 >
                   <div className="relative h-36 overflow-hidden bg-[rgb(var(--blue-700-rgb)/0.08)]">
-                    <div className="absolute inset-0 pointer-events-none">
-                      <div className="absolute -right-14 -top-10 h-40 w-40 rounded-full bg-[rgb(var(--blue-700-rgb)/0.06)]" />
-                      <div className="absolute -bottom-16 left-8 h-44 w-44 rounded-full bg-[rgb(var(--green-600-rgb)/0.08)]" />
-                    </div>
+                    {blog.image ? (
+                      <img
+                        src={
+                          (blog.image || "").startsWith("http")
+                            ? blog.image
+                            : `https://media.bizonance.in/api/v1/image/download/eca82cda-d4d7-4fe5-915a-b0880bb8de74/bizonance/${blog.image || ""}`
+                        }
+                        alt={blog.title || "Blog Image"}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 pointer-events-none">
+                          <div className="absolute -right-14 -top-10 h-40 w-40 rounded-full bg-[rgb(var(--blue-700-rgb)/0.06)]" />
+                          <div className="absolute -bottom-16 left-8 h-44 w-44 rounded-full bg-[rgb(var(--green-600-rgb)/0.08)]" />
+                        </div>
+                        <div className="absolute bottom-5 left-6 text-[34px] font-extrabold leading-none tracking-tight text-[var(--blue-700)]">
+                          SIP
+                        </div>
+                      </>
+                    )}
 
-                    <div className="absolute left-5 top-5 flex flex-wrap gap-2">
-                      <span className="rounded-full border border-[var(--blue-200)] bg-[var(--blue-50)] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--blue-700)]">
+                    <div className="absolute left-5 top-5 z-10 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-[var(--blue-200)] bg-[var(--blue-50)] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--blue-700)] shadow-sm">
                         {blog.tag}
                       </span>
                       {blog.featured ? (
-                        <span className="rounded-full bg-[var(--green-600)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-[var(--text-white)]">
+                        <span className="rounded-full bg-[var(--green-600)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-[var(--text-white)] shadow-sm">
                           Featured
                         </span>
                       ) : null}
-                    </div>
-
-                    <div className="absolute bottom-5 left-6 text-[34px] font-extrabold leading-none tracking-tight text-[var(--blue-700)]">
-                      SIP
                     </div>
                   </div>
 
