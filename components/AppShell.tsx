@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminFooter from "@/components/admin/AdminFooter";
+import FloatingMenu from "@/components/FloatingMenu";
 
 type Props = {
   children: React.ReactNode;
@@ -35,6 +36,7 @@ export default function AppShell({ children }: Props) {
       <Navbar />
       {children}
       <Footer />
+      <FloatingMenu />
     </>
   );
 }

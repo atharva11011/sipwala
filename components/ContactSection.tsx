@@ -1,34 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-
-function buildWhatsAppLeadText(form: {
-  name: string;
-  email: string;
-  phone: string;
-  interest: string;
-  message: string;
-}): string {
-  return `New Lead 🚀\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone || "-"}\nInterest: ${form.interest}\nMessage: ${form.message || "-"}`;
-}
-
-function openWhatsAppLead(form: {
-  name: string;
-  email: string;
-  phone: string;
-  interest: string;
-  message: string;
-}) {
-  const whatsappNumber = "918983260641";
-  const text = buildWhatsAppLeadText(form);
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-
-  const win = window.open(url, "_blank", "noopener,noreferrer");
-  if (!win) {
-    // Popup blockers may prevent new tabs; fall back to same-tab navigation.
-    window.location.href = url;
-  }
-}
+import { openWhatsAppLead } from "@/lib/whatsapp";
 
 export default function ContactSection() {
   const [name, setName] = useState("");

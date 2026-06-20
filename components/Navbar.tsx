@@ -153,20 +153,28 @@ export default function Navbar() {
                     </span>
                   </button>
                   {/* Dropdown */}
-                  <div className="absolute top-full left-0 w-72 bg-[var(--surface)] shadow-[0_18px_40px_rgba(15,23,42,0.12)] invisible group-hover:visible opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 rounded-2xl overflow-hidden border border-[var(--borderSoft)]">
-                    {dropdownItems.map((item, i) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`block px-5 py-3 text-[11px] font-bold text-[var(--text-secondary)] hover:bg-[var(--gray-50)] hover:text-[var(--blue-700)] uppercase tracking-wide transition-colors ${
-                          i < dropdownItems.length - 1
-                            ? "border-b border-[var(--borderSoft)]"
-                            : ""
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                  <div
+                    className={`absolute top-full left-0 ${
+                      link.dropdownLayout === "grid" ? "w-[380px]" : "w-64"
+                    } bg-[var(--surface)] shadow-[0_20px_48px_rgba(15,23,42,0.14)] border border-[var(--gray-200)] invisible group-hover:visible opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-200 z-50 rounded-2xl overflow-hidden p-2`}
+                  >
+                    <div
+                      className={
+                        link.dropdownLayout === "grid"
+                          ? "grid grid-cols-2 gap-1"
+                          : "flex flex-col gap-0.5"
+                      }
+                    >
+                      {dropdownItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="block px-3.5 py-2.5 rounded-lg text-[11px] font-bold text-[var(--text-secondary)] hover:bg-[var(--blue-600)]/[0.08] hover:text-[var(--blue-700)] uppercase tracking-wide transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               );
@@ -236,12 +244,12 @@ export default function Navbar() {
                     </button>
                     {isOpen &&
                       (link.dropdownLayout === "grid" ? (
-                        <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 p-3 grid grid-cols-2 gap-1 border border-[var(--borderSoft)]">
+                        <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 p-2 grid grid-cols-2 gap-1">
                           {dropdownItems.map((item) => (
                             <Link
                               key={item.href}
                               href={item.href}
-                              className="py-2 px-2 text-[11px] font-bold uppercase text-[var(--text-muted)] hover:text-[var(--blue-700)] transition-colors"
+                              className="py-2.5 px-3 rounded-lg text-[11px] font-bold uppercase text-[var(--text-muted)] hover:bg-[var(--blue-600)]/[0.08] hover:text-[var(--blue-700)] transition-colors"
                               onClick={() => {
                                 setMobileOpen(false);
                                 setMobileDropdownOpen(null);
@@ -252,16 +260,12 @@ export default function Navbar() {
                           ))}
                         </div>
                       ) : (
-                        <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 overflow-hidden border border-[var(--borderSoft)]">
-                          {dropdownItems.map((item, i) => (
+                        <div className="bg-[var(--gray-50)] rounded-xl mt-1 mb-2 p-2 flex flex-col gap-0.5">
+                          {dropdownItems.map((item) => (
                             <Link
                               key={item.href}
                               href={item.href}
-                              className={`block py-3 px-4 text-[11px] font-bold uppercase tracking-wide text-[var(--text-muted)] hover:text-[var(--blue-700)] hover:bg-[rgb(var(--text-white-rgb)/0.7)] transition-colors ${
-                                i < dropdownItems.length - 1
-                                  ? "border-b border-[var(--borderSoft)]"
-                                  : ""
-                              }`}
+                              className="block py-2.5 px-3 rounded-lg text-[11px] font-bold uppercase tracking-wide text-[var(--text-muted)] hover:text-[var(--blue-700)] hover:bg-[rgb(var(--text-white-rgb)/0.7)] transition-colors"
                               onClick={() => {
                                 setMobileOpen(false);
                                 setMobileDropdownOpen(null);

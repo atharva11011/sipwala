@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+// TypeScript may complain about missing type declarations for CSS imports in some setups.
+// Ignore the next line to allow side-effect import of the global stylesheet.
+// @ts-ignore
 import "./globals.css";
 import AppShell from "@/components/AppShell";
 import { tokensToCssVars } from "@/lib/tokens";

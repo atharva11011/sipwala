@@ -22,7 +22,7 @@ function InstagramIcon({ size = 18 }: SocialIconProps) {
     >
       <rect x="4" y="4" width="16" height="16" rx="4" />
       <circle cx="12" cy="12" r="3.5" />
-      <circle cx="17" cy="7" r="1" /> 
+      <circle cx="17" cy="7" r="1" />
     </svg>
   );
 }
@@ -343,24 +343,28 @@ export default function Footer() {
       </div>
 
       {/* Copyright strip */}
-      <div className="bg-[rgb(var(--blue-900-rgb)/0.90)] border-t border-[rgb(var(--text-white-rgb)/0.10)] px-5 lg:px-8 py-3.5 text-center">
-        <div className="max-w-[1200px] mx-auto">
-          <p className="text-[12px] leading-[1.75] text-[rgb(var(--text-white-rgb)/0.80)] font-normal inline-flex items-center justify-center gap-4">
-            <span
-              aria-hidden="true"
-              className="hidden sm:inline-block w-[60px] h-px bg-[rgb(var(--text-white-rgb)/0.18)]"
-            />
-            <span>
-              Copyright © 2025, SIPwala. All Rights Reserved. Mutual fund
-              investments are subject to market risks.
-            </span>
-            <span
-              aria-hidden="true"
-              className="hidden sm:inline-block w-[60px] h-px bg-[rgb(var(--text-white-rgb)/0.18)]"
-            />
-          </p>
-        </div>
-      </div>
+      <div className="bg-white border-t border-gray-200 py-4">
+  <div className="max-w-[1200px] mx-auto px-5 lg:px-8 flex items-center justify-between text-[12px] text-gray-500">
+    
+    {/* Left Side: Copyright */}
+    <div className="text-left">
+      <p>
+        Copyright © 2025, SIPwala. All Rights Reserved. Mutual fund investments are subject to market risks.
+      </p>
+    </div>
+
+    {/* Right Side: Branding */}
+    <div className="flex items-center gap-2">
+      <span className="text-gray-600">Developed by</span>
+      <img
+        src="/logos/bizlogo.png" 
+        alt="Bizonance"
+        className="h-5 w-auto object-contain"
+      />
+    </div>
+
+  </div>
+</div>
     </motion.footer>
   );
 }
