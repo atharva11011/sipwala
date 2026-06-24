@@ -42,7 +42,6 @@ export default function FloatingMenu() {
           <motion.div className="flex flex-col gap-3 mb-2">
             {actions.map((action, index) => {
               const commonProps = {
-                key: action.key,
                 initial: { opacity: 0, y: 20, scale: 0 },
                 animate: { opacity: 1, y: 0, scale: 1 },
                 exit: { opacity: 0, y: 20, scale: 0 },
@@ -54,6 +53,7 @@ export default function FloatingMenu() {
               if (action.onClick) {
                 return (
                   <motion.button
+                    key={action.key}
                     {...commonProps}
                     type="button"
                     onClick={() => {
@@ -68,6 +68,7 @@ export default function FloatingMenu() {
 
               return (
                 <motion.a
+                  key={action.key}
                   {...commonProps}
                   href={action.href}
                   target={action.external ? "_blank" : undefined}

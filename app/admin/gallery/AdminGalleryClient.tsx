@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { GalleryImage } from "@/lib/galleryStore";
 
+function isGenericGalleryLabel(text: string | undefined | null) {
+  if (!text) return false;
+  const normalized = text.trim().toLowerCase();
+  return normalized === "gallery image" || normalized === "gallery" || normalized === "image";
+}
+
 type Props = {
   images: GalleryImage[];
 };
@@ -202,9 +208,9 @@ export default function AdminGalleryClient({ images }: Props) {
         )}
 
         <form onSubmit={handleAddImage} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+              <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
                 <span className="material-symbols-outlined text-base">title</span>
                 Image Title
               </label>
@@ -218,7 +224,7 @@ export default function AdminGalleryClient({ images }: Props) {
             </div>
 
             <div>
-              <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+              <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
                 <span className="material-symbols-outlined text-base">category</span>
                 Category
               </label>
@@ -237,7 +243,7 @@ export default function AdminGalleryClient({ images }: Props) {
           </div>
 
           <div>
-            <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+            <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
               <span className="material-symbols-outlined text-base">description</span>
               Description
             </label>
@@ -251,7 +257,7 @@ export default function AdminGalleryClient({ images }: Props) {
           </div>
 
           <div>
-            <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+            <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
               <span className="material-symbols-outlined text-base">upload_file</span>
               Upload Image
             </label>
@@ -401,7 +407,7 @@ export default function AdminGalleryClient({ images }: Props) {
                     {image.title}
                   </h3>
                   <p className="text-[13px] text-[var(--text-secondary)] line-clamp-2 mb-4 flex-1">
-                    {image.description}
+                    {isGenericGalleryLabel(image.description) ? "" : image.description}
                   </p>
                   <div className="flex items-center justify-between pt-4 border-t border-[var(--borderSoft)]">
                     <span className="text-[11px] text-[var(--gray-400)] font-medium">
@@ -468,7 +474,7 @@ export default function AdminGalleryClient({ images }: Props) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+                  <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
                     <span className="material-symbols-outlined text-base">title</span>
                     Image Title
                   </label>
@@ -481,7 +487,7 @@ export default function AdminGalleryClient({ images }: Props) {
                 </div>
 
                 <div>
-                  <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+                  <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
                     <span className="material-symbols-outlined text-base">category</span>
                     Category
                   </label>
@@ -500,7 +506,7 @@ export default function AdminGalleryClient({ images }: Props) {
               </div>
 
               <div>
-                <label className="block text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+                <label className="text-[13px] font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
                   <span className="material-symbols-outlined text-base">description</span>
                   Description
                 </label>

@@ -357,7 +357,7 @@ export default function Footer() {
     <div className="flex items-center gap-2">
       <span className="text-gray-600">Developed by</span>
       <img
-        src="/logos/bizlogo.png" 
+        src="/bizlogo.png" 
         alt="Bizonance"
         className="h-5 w-auto object-contain"
       />
