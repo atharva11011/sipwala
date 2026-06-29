@@ -46,7 +46,7 @@ export default function GallerySection({ images = [] }: Props) {
             </p>
             <div className="mt-10 w-12 h-0.5 rounded-full bg-blue-600" />
           </div>
-
+ 
           {images.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {images.map((image) => {
